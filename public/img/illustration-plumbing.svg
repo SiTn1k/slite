@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Ілюстрація: водонагрівач і труби на стіні">
+  <title>Ілюстрація: водонагрівач і труби на стіні</title>
+  <rect width="800" height="600" fill="#EAF5FC"/>
+  <rect y="470" width="800" height="130" fill="#D2E8F6"/>
+
+  <g fill="none" stroke="#1B7FC4" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M350 392V470H120V330"/>
+    <path d="M120 330V260a30 30 0 0 1 30-30h50"/>
+    <path d="M450 392V470H610V420"/>
+  </g>
+  <path d="M200 270c9 12 14 20 14 27a14 14 0 0 1-28 0c0-7 5-15 14-27z" fill="#1B7FC4"/>
+
+  <rect x="300" y="90" width="200" height="302" rx="76" fill="#fff" stroke="#063B69" stroke-width="8"/>
+  <circle cx="400" cy="178" r="30" fill="#EAF5FC" stroke="#063B69" stroke-width="6"/>
+  <path d="M400 178l17-17" stroke="#063B69" stroke-width="6" stroke-linecap="round"/>
+  <rect x="352" y="250" width="96" height="14" rx="7" fill="#FFD600"/>
+
+  <rect x="540" y="290" width="150" height="130" rx="14" fill="#fff" stroke="#063B69" stroke-width="6"/>
+  <path d="M580 300v110M615 300v110M650 300v110" stroke="#063B69" stroke-width="6" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Ілюстрація: електрощит із проводами">
+  <title>Ілюстрація: електрощит із проводами</title>
+  <rect width="800" height="600" fill="#EAF5FC"/>
+
+  <g fill="none" stroke="#FFD600" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M120 0v110"/>
+    <path d="M500 460c60 40 70 30 120 30"/>
+    <path d="M330 460c0 60-190 20-190 90"/>
+  </g>
+  <circle cx="120" cy="140" r="32" fill="#FFD600" stroke="#063B69" stroke-width="6"/>
+
+  <rect x="250" y="70" width="300" height="390" rx="20" fill="#fff" stroke="#063B69" stroke-width="8"/>
+  <g fill="#052B4A">
+    <rect x="291" y="120" width="44" height="90" rx="6"/>
+    <rect x="349" y="120" width="44" height="90" rx="6"/>
+    <rect x="407" y="120" width="44" height="90" rx="6"/>
+    <rect x="465" y="120" width="44" height="90" rx="6"/>
+    <rect x="291" y="270" width="44" height="90" rx="6"/>
+    <rect x="349" y="270" width="44" height="90" rx="6"/>
+    <rect x="407" y="270" width="44" height="90" rx="6"/>
+    <rect x="465" y="270" width="44" height="90" rx="6"/>
+  </g>
+  <g fill="#FFD600">
+    <rect x="299" y="132" width="28" height="30" rx="4"/>
+    <rect x="357" y="132" width="28" height="30" rx="4"/>
+    <rect x="415" y="152" width="28" height="30" rx="4"/>
+    <rect x="473" y="132" width="28" height="30" rx="4"/>
+    <rect x="299" y="282" width="28" height="30" rx="4"/>
+    <rect x="357" y="302" width="28" height="30" rx="4"/>
+    <rect x="415" y="282" width="28" height="30" rx="4"/>
+    <rect x="473" y="282" width="28" height="30" rx="4"/>
+  </g>
+
+  <rect x="620" y="440" width="100" height="100" rx="26" fill="#fff" stroke="#063B69" stroke-width="6"/>
+  <path d="M658 475v14M682 475v14M656 508c14 10 26 10 40 0" fill="none" stroke="#063B69" stroke-width="6" stroke-linecap="round"/>
+</svg>

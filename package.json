@@ -1,0 +1,28 @@
+{
+  "name": "repair-services-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "node --test src/lib/*.test.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "5.2.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.24.0",
+    "@types/node": "22.14.1",
+    "eslint": "9.24.0",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.30.1",
+    "vite": "6.3.2"
+  }
+}

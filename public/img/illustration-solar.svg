@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Ілюстрація: сонячні панелі на даху будинку">
+  <title>Ілюстрація: сонячні панелі на даху будинку</title>
+  <rect width="800" height="600" fill="#EAF5FC"/>
+
+  <g stroke="#FFD600" stroke-width="9" stroke-linecap="round">
+    <path d="M650 22v-14M650 178v14M572 100h-14M728 100h14M595 45l-10-10M705 155l10 10M705 45l10-10M595 155l-10 10"/>
+  </g>
+  <circle cx="650" cy="100" r="46" fill="#FFD600"/>
+
+  <g transform="translate(120 0) skewX(-18)">
+    <rect x="140" y="190" width="560" height="320" rx="10" fill="#063B69"/>
+    <g fill="#2E9E6B" stroke="#fff" stroke-width="3">
+      <rect x="162" y="214" width="120" height="130" rx="4"/>
+      <rect x="294" y="214" width="120" height="130" rx="4"/>
+      <rect x="426" y="214" width="120" height="130" rx="4"/>
+      <rect x="558" y="214" width="120" height="130" rx="4"/>
+      <rect x="162" y="356" width="120" height="130" rx="4"/>
+      <rect x="294" y="356" width="120" height="130" rx="4"/>
+      <rect x="426" y="356" width="120" height="130" rx="4"/>
+      <rect x="558" y="356" width="120" height="130" rx="4"/>
+    </g>
+    <g stroke="#fff" stroke-width="1.5" opacity=".6">
+      <path d="M202 214v130M242 214v130M334 214v130M374 214v130M466 214v130M506 214v130M598 214v130M638 214v130"/>
+      <path d="M202 356v130M242 356v130M334 356v130M374 356v130M466 356v130M506 356v130M598 356v130M638 356v130"/>
+      <path d="M162 279h120M294 279h120M426 279h120M558 279h120M162 421h120M294 421h120M426 421h120M558 421h120"/>
+    </g>
+  </g>
+</svg>
