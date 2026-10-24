@@ -9,9 +9,9 @@ const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string);
 
 export const meta = {
-  title: `Сантехнік, електрик і сонячні панелі в Черкасах | ${site.name}`,
+  title: `Сантехнік Черкаси — виклик сантехніка, електрик, сонячні панелі | ${site.name}`,
   description:
-    'Сантехніка, електрика та сонячні панелі для квартир і будинків у Черкасах та області. Зателефонуйте, опишіть завдання й дізнайтеся орієнтовну вартість.',
+    'Сантехнік у Черкасах: заміна труб, змішувачів, монтаж водонагрівачів, радіаторів. Також електрик і сонячні панелі для квартир і будинків у Черкасах та області. Зателефонуйте — розрахуємо вартість.',
 };
 
 const phones = visiblePhones();
@@ -63,7 +63,7 @@ function hero(): string {
 <section class="hero" id="home" aria-labelledby="hero-title">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <h1 id="hero-title"><span class="trade trade-water">Сантехніка</span>, <span class="trade trade-bolt">електрика</span> та <span class="trade trade-sun">сонячні панелі</span> в Черкасах</h1>
+      <h1 id="hero-title"><span class="trade trade-water">Сантехнік</span>, <span class="trade trade-bolt">електрик</span> та <span class="trade trade-sun">сонячні панелі</span> в Черкасах</h1>
       <p class="lead">Монтаж, ремонт і заміна для квартир і будинків. Зателефонуйте — обговоримо завдання та вартість.</p>
       <div class="cta-row">${callBtn('btn btn-yellow btn-lg')}<a class="btn btn-outline btn-lg" href="#price">Дізнатися вартість</a></div>
       <div class="phone-list" aria-label="Телефони">${phoneLinks('phone-link')}</div>
@@ -285,6 +285,10 @@ function footer(): string {
       <p class="foot-h">Телефони</p>
       <p>${phones.map((p) => `<a href="tel:${p.e164}">${esc(p.display)}</a> <span class="foot-name">${esc(p.name)}</span>`).join('<br>')}</p>
     </div>
+    <div>
+      <p class="foot-h">Соцмережі</p>
+      <p><a href="${esc(site.instagram)}" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+    </div>
     <nav aria-label="Розділи сторінки">
       <p class="foot-h">Розділи</p>
       <ul>${nav.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join('')}</ul>
@@ -320,6 +324,7 @@ export function headExtra(): string {
       { '@type': 'City', name: 'Черкаси' },
       { '@type': 'AdministrativeArea', name: 'Черкаська область' },
     ],
+    sameAs: [site.instagram],
     ...(domain ? { url: `${domain}/` } : {}),
   };
   return [...url, `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`].join('\n');

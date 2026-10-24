@@ -19,13 +19,14 @@ export interface Service {
 }
 
 export const site = {
-  name: 'Нові послуги Черкаси',
+  name: 'MAYA',
+  instagram: 'https://www.instagram.com/santekhnik_cherkasy/',
   tagline: 'Сантехніка, електрика і сонячні панелі',
   area: 'Черкаси та Черкаська область',
   areaShort: 'по місту та області',
 
   /** Заповніть, коли буде домен, наприклад "https://example.com". Тоді з'являться canonical і og:url. */
-  domain: '',
+  domain: 'https://santehnik-cherkasy.com',
 
   /** Порожньо = форма не надсилається нікуди, лише дзвінок або SMS. Див. README, розділ "Форма". */
   formEndpoint: '',

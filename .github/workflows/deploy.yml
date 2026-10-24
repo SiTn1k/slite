@@ -30,8 +30,8 @@ jobs:
       - name: Build website
         run: npm run build
 
-      - name: Test FTPS connection (dry run)
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
@@ -41,4 +41,3 @@ jobs:
           security: strict
           local-dir: ./dist/
           server-dir: ./
-          dry-run: true

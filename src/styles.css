@@ -347,7 +347,7 @@ input[aria-invalid='true'] { border-color: var(--error); }
 .foot-h { font-weight: 800; color: #fff; }
 .foot-name { color: #9fb7c9; font-size: 0.9rem; }
 .copy { padding-block: 0 28px; font-size: 0.9rem; color: #9fb7c9; }
-@media (min-width: 760px) { .foot-grid { grid-template-columns: 1.4fr 1fr 1fr; } }
+@media (min-width: 760px) { .foot-grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
 
 /* ---------- mobile bar ---------- */
 .mobile-bar {
