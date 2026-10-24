@@ -121,6 +121,7 @@ form?.addEventListener('submit', async (e) => {
        <div class="cta-row">
          <a class="btn btn-yellow" href="${r.callHref}">Зателефонувати</a>
          <a class="btn btn-navy" href="${r.viberHref}" id="viber-btn">Написати у Viber</a>
+         ${r.telegramHref ? `<a class="btn btn-navy" href="${r.telegramHref}" target="_blank" rel="noopener noreferrer">Написати в Telegram</a>` : ''}
        </div>
        <p class="muted">Текст звернення (копіюється при натисканні на Viber, вставте його в чат):</p><p class="sms-preview"></p>`,
     );
@@ -132,6 +133,16 @@ form?.addEventListener('submit', async (e) => {
   } catch {
     showResult('<h3>Не вдалося надіслати</h3><p>Зателефонуйте нам: звернення не збережено.</p>');
   }
+});
+
+// Події в GA4: дзвінки та месенджери. gtag відсутній, якщо аналітика вимкнена або заблокована.
+type Gtag = (cmd: 'event', name: string, params?: object) => void;
+const track = (name: string, params?: object) => (window as unknown as { gtag?: Gtag }).gtag?.('event', name, params);
+document.addEventListener('click', (e) => {
+  const href = (e.target as Element).closest('a')?.getAttribute('href') ?? '';
+  if (href.startsWith('tel:')) track('click_call', { phone: href.slice(4) });
+  else if (href.startsWith('viber:')) track('click_viber');
+  else if (href.includes('t.me/')) track('click_telegram');
 });
 
 const year = $('#year');

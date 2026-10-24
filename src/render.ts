@@ -287,7 +287,7 @@ function footer(): string {
     </div>
     <div>
       <p class="foot-h">Соцмережі</p>
-      <p><a href="${esc(site.instagram)}" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+      <p><a href="${esc(site.instagram)}" target="_blank" rel="noopener noreferrer">Instagram</a>${site.telegram ? ` · <a href="https://t.me/${esc(site.telegram)}" target="_blank" rel="noopener noreferrer">Telegram</a>` : ''}</p>
     </div>
     <nav aria-label="Розділи сторінки">
       <p class="foot-h">Розділи</p>
@@ -338,5 +338,11 @@ export function headExtra(): string {
     mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
   };
   const script = (o: object) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
-  return [...url, script(ld), script(faqLd)].join('\n');
+  const ga = site.gaId
+    ? [
+        `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.gaId)}"></script>`,
+        `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(site.gaId)}');</script>`,
+      ]
+    : [];
+  return [...url, script(ld), script(faqLd), ...ga].join('\n');
 }

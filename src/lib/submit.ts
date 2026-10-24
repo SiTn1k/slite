@@ -12,7 +12,7 @@ export interface Inquiry {
 
 export type SubmitResult =
   | { kind: 'sent' }
-  | { kind: 'fallback'; callHref: string; viberHref: string; message: string };
+  | { kind: 'fallback'; callHref: string; viberHref: string; telegramHref: string; message: string };
 
 export function buildMessage(i: Inquiry): string {
   const lines = ['Доброго дня! Потрібна послуга.'];
@@ -40,5 +40,5 @@ export async function submitInquiry(i: Inquiry): Promise<SubmitResult> {
   }
   const to = visiblePhones()[0];
   const message = buildMessage(i);
-  return { kind: 'fallback', callHref: `tel:${to.e164}`, viberHref: viberHref(site.viber, typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent)), message };
+  return { kind: 'fallback', callHref: `tel:${to.e164}`, viberHref: viberHref(site.viber, typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent)), telegramHref: site.telegram ? `https://t.me/${site.telegram}` : '', message };
 }
