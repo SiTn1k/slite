@@ -319,6 +319,7 @@ export function headExtra(): string {
     '@type': ['LocalBusiness', 'Plumber', 'Electrician'],
     name: site.name,
     inLanguage: 'uk',
+    address: { '@type': 'PostalAddress', addressLocality: 'Черкаси', addressRegion: 'Черкаська область', addressCountry: 'UA' },
     description: site.tagline,
     telephone: phones.map((p) => p.e164),
     areaServed: [
@@ -329,7 +330,7 @@ export function headExtra(): string {
     makesOffer: services
       .filter((x) => x.category !== 'solar' || site.flags.solarConfirmed)
       .map((x) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.title, description: x.description } })),
-    ...(domain ? { url: `${domain}/` } : {}),
+    ...(domain ? { url: `${domain}/`, image: `${domain}/img/hero.svg` } : {}),
   };
   const faqLd = {
     '@context': 'https://schema.org',
