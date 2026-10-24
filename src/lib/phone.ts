@@ -7,7 +7,7 @@ export function normalizePhone(raw: string): string | null {
   return null;
 }
 
-/** Відкриває чат у Viber. Viber не приймає готовий текст через посилання, тому текст копіюється окремо. */
-export function viberHref(to: string): string {
-  return `viber://chat?number=${encodeURIComponent(to)}`;
+/** Відкриває чат у Viber. Android хоче "%2B" у номері, iOS і десктоп працюють лише без "+". Готовий текст Viber не приймає. */
+export function viberHref(to: string, android: boolean): string {
+  return `viber://chat?number=${android ? encodeURIComponent(to) : to.replace(/^\+/, '')}`;
 }

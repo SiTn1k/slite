@@ -17,6 +17,7 @@ test('normalizePhone rejects bad input', () => {
   assert.equal(normalizePhone('09893661511'), null);
 });
 
-test('viberHref encodes the plus sign', () => {
-  assert.equal(viberHref('+380989366151'), 'viber://chat?number=%2B380989366151');
+test('viberHref: Android keeps encoded plus, others drop it', () => {
+  assert.equal(viberHref('+380989366151', true), 'viber://chat?number=%2B380989366151');
+  assert.equal(viberHref('+380989366151', false), 'viber://chat?number=380989366151');
 });
