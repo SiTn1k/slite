@@ -12,7 +12,7 @@ export interface Inquiry {
 
 export type SubmitResult =
   | { kind: 'sent' }
-  | { kind: 'fallback'; callHref: string; viberHref: string; message: string };
+  | { kind: 'fallback'; callHref: string; viberHref: string; telegramHref: string; message: string };
 
 export function buildMessage(i: Inquiry): string {
   const lines = ['Доброго дня! Потрібна послуга.'];
@@ -30,15 +30,25 @@ export function buildMessage(i: Inquiry): string {
  */
 export async function submitInquiry(i: Inquiry): Promise<SubmitResult> {
   if (site.formEndpoint) {
-    const res = await fetch(site.formEndpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(i),
-    });
-    if (!res.ok) throw new Error(`Form endpoint answered ${res.status}`);
-    return { kind: 'sent' };
+    try {
+      const res = await fetch(site.formEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(i),
+      });
+      if (res.ok) return { kind: 'sent' };
+    } catch {
+      // Немає зв'язку або сервера: нижче даємо клієнту зв'язатися самостійно.
+    }
   }
   const to = visiblePhones()[0];
   const message = buildMessage(i);
-  return { kind: 'fallback', callHref: `tel:${to.e164}`, viberHref: viberHref(site.viber, typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent)), message };
+  const android = typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent);
+  return {
+    kind: 'fallback',
+    callHref: `tel:${to.e164}`,
+    viberHref: viberHref(site.viber, android),
+    telegramHref: site.telegram ? `https://t.me/${site.telegram}` : '',
+    message,
+  };
 }
