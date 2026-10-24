@@ -368,3 +368,4 @@ input[aria-invalid='true'] { border-color: var(--error); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+.msgr { margin-top: 12px; }

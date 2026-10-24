@@ -4,6 +4,7 @@ import {
   type CategoryId, type Service,
 } from './config/site.ts';
 import { icon } from './config/icons.ts';
+import { viberHref } from './lib/phone.ts';
 
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string);
@@ -31,6 +32,13 @@ const phoneLinks = (cls: string) =>
         `<a class="${cls}" href="tel:${p.e164}"><span class="phone-name">${esc(p.name)}</span><span class="phone-num">${esc(p.display)}</span></a>`,
     )
     .join('');
+
+/** Постійні кнопки месенджерів. Формат Viber для Android підміняє main.ts за data-viber. */
+const messengerLinks = (cls: string) =>
+  [
+    `<a class="${cls}" data-viber href="${viberHref(site.viber, false)}">Viber</a>`,
+    site.telegram ? `<a class="${cls}" href="https://t.me/${esc(site.telegram)}" target="_blank" rel="noopener noreferrer">Telegram</a>` : '',
+  ].join('');
 
 const nav = [
   ['home', 'Головна'],
@@ -67,6 +75,7 @@ function hero(): string {
       <p class="lead">Виклик сантехніка й електрика додому: монтаж, ремонт і заміна для квартир і будинків у Черкасах. Зателефонуйте — обговоримо завдання та вартість.</p>
       <div class="cta-row">${callBtn('btn btn-yellow btn-lg')}<a class="btn btn-outline btn-lg" href="#price">Дізнатися вартість</a></div>
       <div class="phone-list" aria-label="Телефони">${phoneLinks('phone-link')}</div>
+      <div class="cta-row msgr" aria-label="Месенджери">${messengerLinks('btn btn-navy')}</div>
     </div>
     <figure class="hero-art">
       <img src="img/hero.svg" width="600" height="520" fetchpriority="high" decoding="async"
@@ -266,6 +275,7 @@ function finalCta(): string {
           (p) => `<a class="btn btn-yellow btn-lg" href="tel:${p.e164}">${icon('phone', 20)}<span>${esc(p.name)}: ${esc(p.display)}</span></a>`,
         )
         .join('')}
+      ${messengerLinks('btn btn-light btn-lg')}
       <a class="btn btn-light btn-lg" href="#price">Дізнатися ціну</a>
     </div>
   </div>

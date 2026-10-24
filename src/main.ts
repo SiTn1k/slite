@@ -1,7 +1,7 @@
 import '@fontsource-variable/manrope/wght.css';
 import './styles.css';
 import { site, services, categories, type CategoryId } from './config/site.ts';
-import { normalizePhone } from './lib/phone.ts';
+import { normalizePhone, viberHref } from './lib/phone.ts';
 import { submitInquiry } from './lib/submit.ts';
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector<T>(sel);
@@ -135,6 +135,13 @@ form?.addEventListener('submit', async (e) => {
     showResult('<h3>Не вдалося надіслати</h3><p>Зателефонуйте нам: звернення не збережено.</p>');
   }
 });
+
+// Android потребує інший запис номера у viber://, ніж десктоп та iOS.
+if (/android/i.test(navigator.userAgent)) {
+  document.querySelectorAll<HTMLAnchorElement>('a[data-viber]').forEach((a) => {
+    a.href = viberHref(site.viber, true);
+  });
+}
 
 // Події в GA4: дзвінки, месенджери, заявка. gtag відсутній, якщо аналітика вимкнена або заблокована.
 type Gtag = (cmd: 'event', name: string, params?: object) => void;
