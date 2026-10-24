@@ -162,7 +162,7 @@ function priceSection(): string {
     <div class="price-copy">
       <h2 id="price-title">Вартість</h2>
       <p class="section-lead">Вартість залежить від обсягу, складності робіт і матеріалів. Точну суму можна назвати, лише знаючи завдання.</p>
-      <p class="muted">Ця форма не надсилає заявку автоматично. Після заповнення ви зможете зателефонувати або надіслати готове SMS.</p>
+      <p class="muted">Ця форма не надсилає заявку автоматично. Після заповнення ви зможете зателефонувати або написати у Viber.</p>
       <div class="phone-list">${phoneLinks('phone-link')}</div>
     </div>
     <form class="form" id="inquiry" novalidate>

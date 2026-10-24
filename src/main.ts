@@ -117,15 +117,18 @@ form?.addEventListener('submit', async (e) => {
     }
     showResult(
       `<h3>Звернення підготовлено, але ще не надіслано</h3>
-       <p>Ця форма не передає дані нікуди. Щоб ми отримали ваше завдання, зателефонуйте або надішліть SMS.</p>
+       <p>Ця форма не передає дані нікуди. Щоб ми отримали ваше завдання, зателефонуйте або напишіть у Viber.</p>
        <div class="cta-row">
          <a class="btn btn-yellow" href="${r.callHref}">Зателефонувати</a>
-         <a class="btn btn-navy" href="${r.smsHref}">Надіслати SMS</a>
+         <a class="btn btn-navy" href="${r.viberHref}" id="viber-btn">Написати у Viber</a>
        </div>
-       <p class="muted">Текст SMS:</p><p class="sms-preview"></p>`,
+       <p class="muted">Текст звернення (копіюється при натисканні на Viber, вставте його в чат):</p><p class="sms-preview"></p>`,
     );
     const preview = result.querySelector('.sms-preview');
     if (preview) preview.textContent = r.message;
+    result.querySelector('#viber-btn')?.addEventListener('click', () => {
+      navigator.clipboard?.writeText(r.message).catch(() => {});
+    });
   } catch {
     showResult('<h3>Не вдалося надіслати</h3><p>Зателефонуйте нам: звернення не збережено.</p>');
   }

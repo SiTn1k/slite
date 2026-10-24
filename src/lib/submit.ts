@@ -1,5 +1,5 @@
 import { site, visiblePhones } from '../config/site.ts';
-import { smsHref } from './phone.ts';
+import { viberHref } from './phone.ts';
 
 export interface Inquiry {
   name: string;
@@ -12,7 +12,7 @@ export interface Inquiry {
 
 export type SubmitResult =
   | { kind: 'sent' }
-  | { kind: 'fallback'; callHref: string; smsHref: string; message: string };
+  | { kind: 'fallback'; callHref: string; viberHref: string; message: string };
 
 export function buildMessage(i: Inquiry): string {
   const lines = ['Доброго дня! Потрібна послуга.'];
@@ -24,7 +24,7 @@ export function buildMessage(i: Inquiry): string {
 
 /**
  * Єдина точка, де звернення залишає сторінку.
- * - formEndpoint порожній: нічого не надсилається, лише готуємо дзвінок і SMS.
+ * - formEndpoint порожній: нічого не надсилається, лише готуємо дзвінок і Viber.
  * - formEndpoint заданий: JSON POST на цей URL. Це передача персональних даних стороннім сервісом,
  *   тому вмикайте її свідомо (див. README).
  */
@@ -40,5 +40,5 @@ export async function submitInquiry(i: Inquiry): Promise<SubmitResult> {
   }
   const to = visiblePhones()[0];
   const message = buildMessage(i);
-  return { kind: 'fallback', callHref: `tel:${to.e164}`, smsHref: smsHref(to.e164, message), message };
+  return { kind: 'fallback', callHref: `tel:${to.e164}`, viberHref: viberHref(to.e164), message };
 }

@@ -7,7 +7,7 @@ export function normalizePhone(raw: string): string | null {
   return null;
 }
 
-/** Посилання sms: із готовим текстом. "?&body=" працює і на iOS, і на Android. */
-export function smsHref(to: string, body: string): string {
-  return `sms:${to}?&body=${encodeURIComponent(body)}`;
+/** Відкриває чат у Viber. Viber не приймає готовий текст через посилання, тому текст копіюється окремо. */
+export function viberHref(to: string): string {
+  return `viber://chat?number=${encodeURIComponent(to)}`;
 }

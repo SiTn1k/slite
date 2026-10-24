@@ -28,12 +28,12 @@ export const site = {
   /** Заповніть, коли буде домен, наприклад "https://example.com". Тоді з'являться canonical і og:url. */
   domain: 'https://santehnik-cherkasy.com',
 
-  /** Порожньо = форма не надсилається нікуди, лише дзвінок або SMS. Див. README, розділ "Форма". */
+  /** Порожньо = форма не надсилається нікуди, лише дзвінок або Viber. Див. README, розділ "Форма". */
   formEndpoint: '',
 
   flags: {
     // TO CONFIRM WITH OWNER: чи показувати номер Олеся (електрика).
-    showOlesPhone: false,
+    showOlesPhone: true,
     // TO CONFIRM WITH OWNER: чи підтверджені послуги із сонячних панелей.
     // false = показуємо лише коротку нейтральну картку без переліку послуг.
     solarConfirmed: false,
@@ -45,7 +45,7 @@ export const site = {
       { name: 'Андрій', display: '093 468 05 02', e164: '+380934680502' },
     ] satisfies Phone[],
     // TO CONFIRM WITH OWNER: номер Олеся не підтверджений, прихований прапорцем showOlesPhone.
-    oles: { name: 'Олесь (електрика)', display: '093 257 70 05', e164: '+380932577005' } satisfies Phone,
+    oles: { name: 'Диспетчер', display: '093 257 70 05', e164: '+380932577005' } satisfies Phone,
   },
 };
 
