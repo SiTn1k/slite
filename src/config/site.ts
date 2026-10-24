@@ -66,22 +66,22 @@ export const categories: Record<CategoryId, { title: string; lead: string; icon:
 
 export const services: Service[] = [
   // Сантехніка (з реклами власника)
-  { id: 'heater', category: 'plumbing', title: 'Монтаж водонагрівачів', description: 'Будь-якої складності.', icon: 'heater' },
-  { id: 'bath', category: 'plumbing', title: 'Унітази, ванни, мийки', description: 'Встановлення.', icon: 'bath' },
+  { id: 'heater', category: 'plumbing', title: 'Монтаж водонагрівачів', description: 'Встановлення бойлера та водонагрівача будь-якої складності.', icon: 'heater' },
+  { id: 'bath', category: 'plumbing', title: 'Унітази, ванни, мийки', description: 'Встановлення унітаза, ванни, раковини й мийки.', icon: 'bath' },
   { id: 'fixtures', category: 'plumbing', title: 'Сантехнічні прилади', description: 'Монтаж і демонтаж.', icon: 'sink' },
-  { id: 'meters', category: 'plumbing', title: 'Лічильники води', description: 'Заміна та встановлення.', icon: 'meter' },
+  { id: 'meters', category: 'plumbing', title: 'Лічильники води', description: 'Встановлення та заміна водяних лічильників.', icon: 'meter' },
   { id: 'towel', category: 'plumbing', title: 'Сушки для рушників', description: 'Встановлення та заміна.', icon: 'towel' },
-  { id: 'machines', category: 'plumbing', title: 'Посудомийні та пральні машини', description: 'Підключення.', icon: 'washer' },
-  { id: 'radiators', category: 'plumbing', title: 'Радіатори опалення', description: 'Монтаж.', icon: 'radiator' },
-  { id: 'pipes', category: 'plumbing', title: 'Труби', description: 'Заміна у квартирі та будинку.', icon: 'pipes' },
-  { id: 'floor', category: 'plumbing', title: 'Тепла підлога', description: 'Монтаж.', icon: 'floor' },
-  { id: 'mixers', category: 'plumbing', title: 'Змішувачі', description: 'Заміна та ремонт.', icon: 'mixer' },
+  { id: 'machines', category: 'plumbing', title: 'Посудомийні та пральні машини', description: 'Підключення пральної та посудомийної машини.', icon: 'washer' },
+  { id: 'radiators', category: 'plumbing', title: 'Радіатори опалення', description: 'Монтаж і заміна радіаторів опалення.', icon: 'radiator' },
+  { id: 'pipes', category: 'plumbing', title: 'Труби', description: 'Заміна водопровідних і каналізаційних труб у квартирі та будинку.', icon: 'pipes' },
+  { id: 'floor', category: 'plumbing', title: 'Тепла підлога', description: 'Монтаж теплої підлоги.', icon: 'floor' },
+  { id: 'mixers', category: 'plumbing', title: 'Змішувачі', description: 'Заміна та ремонт змішувачів на кухні й у ванній.', icon: 'mixer' },
 
   // Електрика (з реклами власника)
   { id: 'electro', category: 'electrical', title: 'Електромонтажні роботи', description: 'Для квартир і будинків.', icon: 'wiring' },
   { id: 'wiring', category: 'electrical', title: 'Заміна проводки', description: 'Заміна електропроводки.', icon: 'cable' },
-  { id: 'panels', category: 'electrical', title: 'Електрощити', description: 'Встановлення.', icon: 'panel' },
-  { id: 'fittings', category: 'electrical', title: 'Світильники, розетки, вимикачі', description: 'Встановлення.', icon: 'socket' },
+  { id: 'panels', category: 'electrical', title: 'Електрощити', description: 'Встановлення та заміна електрощитів.', icon: 'panel' },
+  { id: 'fittings', category: 'electrical', title: 'Світильники, розетки, вимикачі', description: 'Встановлення та заміна світильників, розеток і вимикачів.', icon: 'socket' },
   { id: 'repair', category: 'electrical', title: 'Дрібний ремонт електрики', description: 'Ремонт електрики.', icon: 'wrench' },
 
   // Сонячні панелі: ЦІ ПОСЛУГИ НЕ ПІДТВЕРДЖЕНІ ВЛАСНИКОМ (solarConfirmed=false).
@@ -125,6 +125,22 @@ export const faq = [
   {
     q: 'Чи можна обговорити встановлення сонячних панелей?',
     a: 'Так. Зателефонуйте й опишіть завдання, і ми обговоримо, що саме потрібно зробити.',
+  },
+  {
+    q: 'Чи можна викликати сантехніка додому в Черкасах?',
+    a: 'Так. Зателефонуйте диспетчеру й опишіть завдання: заміна змішувача, труб, встановлення унітаза чи бойлера. Ми підтвердимо, чи можемо виїхати за вашою адресою.',
+  },
+  {
+    q: 'Чи підключаєте пральні та посудомийні машини?',
+    a: 'Так, підключення пральних і посудомийних машин входить до наших послуг. Зателефонуйте й скажіть, де потрібне підключення.',
+  },
+  {
+    q: 'Чи встановлюєте бойлери та водонагрівачі?',
+    a: 'Так, виконуємо монтаж водонагрівачів і бойлерів будь-якої складності у квартирах і будинках.',
+  },
+  {
+    q: 'Чи можна замовити заміну проводки та електрощита?',
+    a: 'Так. Виконуємо заміну електропроводки, встановлення електрощитів, розеток, вимикачів і світильників у квартирах і будинках Черкас.',
   },
   {
     q: 'Що підготувати перед дзвінком?',
