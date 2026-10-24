@@ -339,5 +339,11 @@ export function headExtra(): string {
     mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
   };
   const script = (o: object) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
-  return [...url, script(ld), script(faqLd)].join('\n');
+  const ga = site.gaId
+    ? [
+        `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.gaId)}"></script>`,
+        `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(site.gaId)}');</script>`,
+      ]
+    : [];
+  return [...url, script(ld), script(faqLd), ...ga].join('\n');
 }
