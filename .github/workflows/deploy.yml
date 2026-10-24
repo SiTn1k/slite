@@ -30,6 +30,13 @@ jobs:
       - name: Build website
         run: npm run build
 
+      - name: Write Telegram config for lead.php
+        env:
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        run: |
+          printf "<?php\nreturn ['token' => '%s', 'chat' => '%s'];\n" "$TG_BOT_TOKEN" "$TG_CHAT_ID" > dist/api/config.php
+
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -41,3 +48,7 @@ jobs:
           security: strict
           local-dir: ./dist/
           server-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            api/data/**
