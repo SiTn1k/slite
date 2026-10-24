@@ -112,12 +112,13 @@ form?.addEventListener('submit', async (e) => {
       description: String(data.get('description') ?? '').trim(),
     });
     if (r.kind === 'sent') {
-      showResult('<h3>Звернення надіслано</h3><p>Ми зв’яжемося з вами за вказаним номером.</p>');
+      track('generate_lead');
+      showResult('<h3>Заявку прийнято</h3><p>Диспетчер зателефонує вам найближчим часом і детальніше проконсультує. За потреби він також може написати вам у месенджер.</p>');
       return;
     }
     showResult(
-      `<h3>Звернення підготовлено, але ще не надіслано</h3>
-       <p>Ця форма не передає дані нікуди. Щоб ми отримали ваше завдання, зателефонуйте або напишіть у Viber.</p>
+      `<h3>Не вдалося надіслати заявку</h3>
+       <p>Зателефонуйте диспетчеру або напишіть у месенджер, і ми все підкажемо.</p>
        <div class="cta-row">
          <a class="btn btn-yellow" href="${r.callHref}">Зателефонувати</a>
          <a class="btn btn-navy" href="${r.viberHref}" id="viber-btn">Написати у Viber</a>
@@ -135,7 +136,7 @@ form?.addEventListener('submit', async (e) => {
   }
 });
 
-// Події в GA4: дзвінки та месенджери. gtag відсутній, якщо аналітика вимкнена або заблокована.
+// Події в GA4: дзвінки, месенджери, заявка. gtag відсутній, якщо аналітика вимкнена або заблокована.
 type Gtag = (cmd: 'event', name: string, params?: object) => void;
 const track = (name: string, params?: object) => (window as unknown as { gtag?: Gtag }).gtag?.('event', name, params);
 document.addEventListener('click', (e) => {
