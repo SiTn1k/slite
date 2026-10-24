@@ -316,8 +316,9 @@ export function headExtra(): string {
   const url = domain ? [`<link rel="canonical" href="${esc(domain)}/">`, `<meta property="og:url" content="${esc(domain)}/">`] : [];
   const ld = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
+    '@type': ['LocalBusiness', 'Plumber', 'Electrician'],
     name: site.name,
+    inLanguage: 'uk',
     description: site.tagline,
     telephone: phones.map((p) => p.e164),
     areaServed: [
@@ -325,7 +326,16 @@ export function headExtra(): string {
       { '@type': 'AdministrativeArea', name: 'Черкаська область' },
     ],
     sameAs: [site.instagram],
+    makesOffer: services
+      .filter((x) => x.category !== 'solar' || site.flags.solarConfirmed)
+      .map((x) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.title, description: x.description } })),
     ...(domain ? { url: `${domain}/` } : {}),
   };
-  return [...url, `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`].join('\n');
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  };
+  const script = (o: object) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
+  return [...url, script(ld), script(faqLd)].join('\n');
 }
