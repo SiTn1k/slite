@@ -148,7 +148,7 @@ const track = (name: string, params?: object) => (window as unknown as { gtag?: 
 document.addEventListener('click', (e) => {
   const href = (e.target as Element).closest('a')?.getAttribute('href') ?? '';
   if (href.startsWith('tel:')) track('click_call', { phone: href.slice(4) });
-  else if (href.startsWith('viber:')) track('click_viber');
+  else if ((href.startsWith('viber:') || href.includes('scheme=viber'))) track('click_viber');
   else if (href.includes('t.me/')) track('click_telegram');
 });
 

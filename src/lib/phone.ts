@@ -7,7 +7,9 @@ export function normalizePhone(raw: string): string | null {
   return null;
 }
 
-/** Посилання Viber через viber://add: у такому вигляді воно відкривається на ноутбуці, на відміну від viber://chat. Android потребує "%2B" замість "+". */
+/** Десктоп та iOS: viber://add (viber://chat там не відкривається). Android Chrome не розпізнає голу viber:// схему, тому intent:// з пакетом Viber і "%2B" замість "+". */
 export function viberHref(to: string, android: boolean): string {
-  return `viber://add?number=${android ? encodeURIComponent(to) : to}`;
+  return android
+    ? `intent://chat?number=${encodeURIComponent(to)}#Intent;scheme=viber;package=com.viber.voip;end`
+    : `viber://add?number=${to}`;
 }
