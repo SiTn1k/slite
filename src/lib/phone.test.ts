@@ -18,6 +18,6 @@ test('normalizePhone rejects bad input', () => {
 });
 
 test('viberHref: Android uses intent with encoded plus, others keep it', () => {
-  assert.equal(viberHref('+380989366151', true), 'intent://chat?number=%2B380989366151#Intent;scheme=viber;package=com.viber.voip;end');
+  assert.equal(viberHref('+380989366151', true), 'intent://add?number=%2B380989366151#Intent;scheme=viber;package=com.viber.voip;end');
   assert.equal(viberHref('+380989366151', false), 'viber://add?number=+380989366151');
 });
