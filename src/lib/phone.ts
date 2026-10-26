@@ -7,9 +7,9 @@ export function normalizePhone(raw: string): string | null {
   return null;
 }
 
-/** Десктоп та iOS: viber://add (viber://chat там не відкривається). Android Chrome не розпізнає голу viber:// схему, тому intent:// з пакетом Viber і "%2B" замість "+". */
+/** Десктоп та iOS: viber://add (viber://chat там не відкривається). "+" кодуємо як %2B: голий плюс у query стає пробілом і iOS Viber каже "контакт не знайдено". Android Chrome не розпізнає голу viber:// схему, тому intent:// з пакетом Viber і "%2B" замість "+". */
 export function viberHref(to: string, android: boolean): string {
   return android
     ? `intent://add?number=${encodeURIComponent(to)}#Intent;scheme=viber;package=com.viber.voip;end`
-    : `viber://add?number=${to}`;
+    : `viber://add?number=${encodeURIComponent(to)}`;
 }

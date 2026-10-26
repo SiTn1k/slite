@@ -1,6 +1,6 @@
 import '@fontsource-variable/manrope/wght.css';
 import './styles.css';
-import { site, services, categories, type CategoryId } from './config/site.ts';
+import { site, services, categories, works, type CategoryId } from './config/site.ts';
 import { normalizePhone, viberHref } from './lib/phone.ts';
 import { submitInquiry } from './lib/submit.ts';
 
@@ -134,6 +134,65 @@ form?.addEventListener('submit', async (e) => {
     showResult('<h3>Не вдалося надіслати</h3><p>Зателефонуйте нам: звернення не збережено.</p>');
   }
 });
+
+// --- галерея робіт: фільтр і лайтбокс (відео вантажиться лише при відкритті) ---
+const filterBtns = document.querySelectorAll<HTMLButtonElement>('.chip[data-filter]');
+const workItems = document.querySelectorAll<HTMLLIElement>('.gallery li');
+filterBtns.forEach((b) =>
+  b.addEventListener('click', () => {
+    filterBtns.forEach((x) => {
+      x.classList.toggle('is-active', x === b);
+      x.setAttribute('aria-pressed', String(x === b));
+    });
+    workItems.forEach((li) => (li.hidden = b.dataset.filter !== 'all' && li.dataset.stage !== b.dataset.filter));
+  }),
+);
+
+const lb = $<HTMLDialogElement>('#lightbox');
+if (lb) {
+  const stage = lb.querySelector('.lb-stage')!;
+  const cap = lb.querySelector('.lb-cap')!;
+  let cur = 0;
+  const visible = () => [...workItems].filter((li) => !li.hidden).map((li) => li.querySelector<HTMLButtonElement>('.work')!);
+  const show = (btn: HTMLButtonElement) => {
+    cur = visible().indexOf(btn);
+    const w = works[Number(btn.dataset.i)];
+    stage.replaceChildren();
+    if (w.kind === 'video') {
+      const v = document.createElement('video');
+      v.src = `work/${w.file}.mp4`;
+      v.poster = `work/${w.file}.jpg`;
+      v.controls = v.autoplay = v.playsInline = true;
+      v.setAttribute('playsinline', '');
+      stage.append(v);
+    } else {
+      const img = document.createElement('img');
+      img.src = `work/${w.file}.jpg`;
+      img.alt = w.title;
+      stage.append(img);
+    }
+    cap.textContent = `${w.title}. ${w.text}`;
+  };
+  const step = (d: number) => {
+    const list = visible();
+    show(list[(cur + d + list.length) % list.length]);
+  };
+  document.querySelectorAll<HTMLButtonElement>('.work').forEach((b) =>
+    b.addEventListener('click', () => {
+      show(b);
+      lb.showModal();
+    }),
+  );
+  lb.querySelector('.lb-close')?.addEventListener('click', () => lb.close());
+  lb.querySelector('.lb-prev')?.addEventListener('click', () => step(-1));
+  lb.querySelector('.lb-next')?.addEventListener('click', () => step(1));
+  lb.addEventListener('click', (e) => e.target === lb && lb.close());
+  lb.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+  lb.addEventListener('close', () => stage.replaceChildren());
+}
 
 // Android потребує інший запис номера у viber://, ніж десктоп та iOS.
 if (/android/i.test(navigator.userAgent)) {

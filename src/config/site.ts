@@ -148,10 +148,20 @@ export const faq = [
   },
 ];
 
-export const gallery = [
-  { file: 'illustration-plumbing', alt: 'Ілюстрація: водонагрівач і труби на стіні', caption: 'Водонагрівач і труби' },
-  { file: 'illustration-electrical', alt: 'Ілюстрація: електрощит із проводами', caption: 'Електрощит і проводка' },
-  { file: 'illustration-solar', alt: 'Ілюстрація: сонячні панелі на даху будинку', caption: 'Сонячні панелі на даху' },
+/** Реальні роботи. file: public/work/<file>.mp4 + .jpg (постер) або лише .jpg для фото. stage: result = виконано, process = процес. */
+export type Work = { file: string; kind: 'video' | 'photo'; stage: 'result' | 'process'; title: string; text: string; duration?: string };
+
+export const works: Work[] = [
+  { file: 'v5687', kind: 'video', stage: 'result', title: 'Опалення: колектор і котел', text: 'Розвели опалення від колектора, підключили котел.', duration: '0:23' },
+  { file: 'photo-boiler', kind: 'photo', stage: 'result', title: 'Водонагрівач Ariston', text: 'Встановили водонагрівач і підключили воду та електрику.' },
+  { file: 'v5691', kind: 'video', stage: 'result', title: 'Підключення бойлера', text: 'Бойлер на стіні, труби підведені та працюють.', duration: '0:09' },
+  { file: 'v5693', kind: 'video', stage: 'result', title: 'Заміна стояків і лічильників', text: 'Нові труби в квартирі, встановлені лічильники води.', duration: '0:23' },
+  { file: 'v5695', kind: 'video', stage: 'result', title: 'Стояки каналізації та холодної води', text: 'Замінили два стояки, вивели підключення під ванну й унітаз.', duration: '0:18' },
+  { file: 'v5688', kind: 'video', stage: 'result', title: 'Розводка води в санвузлі', text: 'Нова розводка води, каналізація підготовлена.', duration: '0:20' },
+  { file: 'v5689', kind: 'video', stage: 'result', title: 'Вузол водопідготовки', text: 'Замінили вузол із фільтром і кранами.', duration: '0:28' },
+  { file: 'v5692', kind: 'video', stage: 'process', title: 'Демонтаж чавунної каналізації', text: 'Стара чавунна труба розсипається в руках: міняємо на нову.', duration: '0:51' },
+  { file: 'v5696', kind: 'video', stage: 'process', title: 'Нова розводка труб', text: 'Труби прокладені, оздоблення стін ще попереду.', duration: '0:18' },
+  { file: 'v5698', kind: 'video', stage: 'process', title: 'Приїзд на об’єкт', text: 'Перед монтажем бойлера довелося переробити стару розводку.', duration: '0:19' },
 ];
 
 /** Телефони для показу: порядок = порядок кнопок. */

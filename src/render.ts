@@ -1,6 +1,6 @@
 // Збирає HTML сторінки з конфігу. Викликається на збірці з vite.config.ts, тож контент є в HTML без JS.
 import {
-  site, categories, services, whyUs, steps, faq, gallery, visiblePhones,
+  site, categories, services, whyUs, steps, faq, works, visiblePhones,
   type CategoryId, type Service,
 } from './config/site.ts';
 import { icon } from './config/icons.ts';
@@ -212,19 +212,39 @@ function priceSection(): string {
 </section>`;
 }
 
+const WORK_TITLE = 'Наші роботи';
+
 function gallerySection(): string {
+  const play = '<span class="play" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>';
   return `
 <section class="section" id="gallery" aria-labelledby="gallery-title">
   <div class="wrap">
-    <h2 id="gallery-title">Приклади робіт</h2>
-    <p class="section-lead">Ілюстративні зображення, не фото виконаних робіт.</p>
+    <h2 id="gallery-title">${WORK_TITLE}</h2>
+    <p class="section-lead">Фото й відео з реальних об’єктів у Черкасах: від початку робіт до результату.</p>
+    <div class="filters" role="group" aria-label="Фільтр робіт">
+      <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">Усі</button>
+      <button type="button" class="chip" data-filter="result" aria-pressed="false">Виконані роботи</button>
+      <button type="button" class="chip" data-filter="process" aria-pressed="false">Процес</button>
+    </div>
     <ul class="gallery">
-      ${gallery
+      ${works
         .map(
-          (g) => `<li><figure><img src="img/${g.file}.svg" width="800" height="600" loading="lazy" decoding="async" alt="${esc(g.alt)}"><figcaption>${esc(g.caption)}</figcaption></figure></li>`,
+          (w, i) => `<li data-stage="${w.stage}"><button type="button" class="work" data-i="${i}" aria-label="${esc(w.title)}: відкрити ${w.kind === 'video' ? 'відео' : 'фото'}">
+        <img src="work/${w.file}.jpg" width="360" height="640" loading="lazy" decoding="async" alt="${esc(w.title)}">
+        <span class="badge badge-${w.stage}">${w.stage === 'result' ? 'Виконано' : 'Процес'}</span>
+        ${w.kind === 'video' ? `${play}<span class="dur">${w.duration}</span>` : ''}
+        <span class="cap"><strong>${esc(w.title)}</strong><span>${esc(w.text)}</span></span>
+      </button></li>`,
         )
         .join('')}
     </ul>
+    <dialog class="lightbox" id="lightbox" aria-label="Перегляд роботи">
+      <div class="lb-stage"></div>
+      <p class="lb-cap"></p>
+      <button type="button" class="lb-btn lb-close" aria-label="Закрити">${icon('close')}</button>
+      <button type="button" class="lb-btn lb-prev" aria-label="Попереднє">‹</button>
+      <button type="button" class="lb-btn lb-next" aria-label="Наступне">›</button>
+    </dialog>
   </div>
 </section>`;
 }
