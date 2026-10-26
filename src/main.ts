@@ -148,19 +148,18 @@ filterBtns.forEach((b) =>
   }),
 );
 
-// Карусель: стрілки, автопрокрутка кожні 6 с (пауза при наведенні, фокусі, дотику та відкритому лайтбоксі)
-const track_ = document.querySelector<HTMLUListElement>('.gallery');
-if (track_) {
+// Каруселі (роботи, відгуки): стрілки, автопрокрутка кожні 6 с (пауза при наведенні, фокусі, дотику та відкритому лайтбоксі)
+document.querySelectorAll<HTMLElement>('.carousel').forEach((car) => {
+  const track = car.querySelector<HTMLUListElement>('.gallery')!;
   const move = (d: number) => {
-    const first = track_.querySelector<HTMLLIElement>('li:not([hidden])');
-    const end = track_.scrollLeft + track_.clientWidth >= track_.scrollWidth - 4;
-    if (d > 0 && end) track_.scrollTo({ left: 0 });
-    else if (d < 0 && track_.scrollLeft <= 4) track_.scrollTo({ left: track_.scrollWidth });
-    else track_.scrollBy({ left: d * ((first?.offsetWidth ?? 280) + 14) });
+    const first = track.querySelector<HTMLLIElement>('li:not([hidden])');
+    const end = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    if (d > 0 && end) track.scrollTo({ left: 0 });
+    else if (d < 0 && track.scrollLeft <= 4) track.scrollTo({ left: track.scrollWidth });
+    else track.scrollBy({ left: d * ((first?.offsetWidth ?? 280) + 14) });
   };
-  document.querySelector('.car-prev')?.addEventListener('click', () => move(-1));
-  document.querySelector('.car-next')?.addEventListener('click', () => move(1));
-  const car = track_.parentElement!;
+  car.querySelector('.car-prev')?.addEventListener('click', () => move(-1));
+  car.querySelector('.car-next')?.addEventListener('click', () => move(1));
   let paused = false;
   for (const [on, off] of [['pointerenter', 'pointerleave'], ['focusin', 'focusout'], ['touchstart', 'touchend']] as const) {
     car.addEventListener(on, () => (paused = true));
@@ -168,6 +167,44 @@ if (track_) {
   }
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     setInterval(() => !paused && !document.hidden && !document.querySelector('#lightbox[open]') && move(1), 6000);
+  }
+});
+
+// Карта офісів: перемикач адрес
+const officeMap = $<HTMLIFrameElement>('#office-map');
+document.querySelectorAll<HTMLButtonElement>('[data-office]').forEach((b) =>
+  b.addEventListener('click', () => {
+    const addr = b.dataset.office!;
+    document.querySelectorAll<HTMLButtonElement>('[data-office]').forEach((x) => {
+      x.classList.toggle('is-active', x === b);
+      x.setAttribute('aria-pressed', String(x === b));
+    });
+    const o = site.offices.find((x) => x.address === addr);
+    if (officeMap) officeMap.src = `https://www.google.com/maps?q=${encodeURIComponent(addr)}&hl=uk&output=embed`;
+    $<HTMLAnchorElement>('#office-route')!.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(addr)}`;
+    $('#office-info')!.innerHTML = '';
+    $('#office-info')!.append(Object.assign(document.createElement('strong'), { textContent: addr }));
+    if (o?.hours) $('#office-info')!.append(document.createElement('br'), o.hours);
+  }),
+);
+
+// Банер: раз за сесію через 5 с, не заважає, якщо відкрито лайтбокс або людина вже заповнює форму
+const promo = $<HTMLDialogElement>('#promo');
+if (promo) {
+  const KEY = 'promo-closed';
+  const seen = () => { try { return sessionStorage.getItem(KEY) === '1'; } catch { return false; } };
+  const close = () => {
+    promo.close();
+    try { sessionStorage.setItem(KEY, '1'); } catch { /* приватний режим */ }
+  };
+  promo.querySelector('.promo-x')?.addEventListener('click', close);
+  promo.querySelectorAll('[data-promo-go]').forEach((a) => a.addEventListener('click', close));
+  promo.addEventListener('keydown', (e) => e.key === 'Escape' && close());
+  if (!seen()) {
+    setTimeout(() => {
+      const typing = document.activeElement?.closest('form');
+      if (!seen() && !typing && !document.querySelector('#lightbox[open]')) promo.show();
+    }, 5000);
   }
 }
 

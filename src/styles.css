@@ -438,3 +438,43 @@ input[aria-invalid='true'] { border-color: var(--error); }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
 .msgr { margin-top: 12px; }
+
+/* ---------- places, reviews ---------- */
+.places-grid { margin-top: 20px; display: grid; gap: 24px; }
+.map-box { display: grid; gap: 14px; align-content: start; }
+.map { width: 100%; height: 320px; border: 0; border-radius: 18px; box-shadow: var(--shadow); background: #fff; }
+.office-info { margin: 0; font-size: 1.05rem; }
+.review-cta { padding: 24px; display: grid; gap: 14px; align-content: start; background: #fff; border-radius: 18px; box-shadow: var(--shadow); }
+.review-cta h3, .review-cta p { margin: 0; }
+.reviews-h { margin: 36px 0 0; }
+.gallery.reviews li { flex-basis: 78%; }
+.gallery.reviews img { width: 100%; height: auto; display: block; border-radius: 14px; box-shadow: var(--shadow); background: #fff; }
+@media (min-width: 760px) {
+  .places-grid { grid-template-columns: 3fr 2fr; }
+  .map { height: 380px; }
+  .gallery.reviews li { flex-basis: calc((100% - 40px) / 3); }
+}
+.foot-socials { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+
+/* ---------- promo banner ---------- */
+.promo {
+  position: fixed; inset: auto 12px 84px auto; z-index: 60; width: min(380px, calc(100vw - 24px)); margin: 0; padding: 22px 20px 20px;
+  color: var(--ink); background: #fff; border: 0; border-radius: 20px; box-shadow: 0 18px 50px rgb(3 30 52 / .35);
+}
+.promo[open] { display: grid; gap: 12px; animation: promo-in .35s ease-out; }
+.promo h2 { margin: 0; font-size: 1.35rem; padding-right: 40px; }
+.promo p { margin: 0; }
+.promo .btn { width: 100%; }
+.promo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.promo-row .btn { padding-inline: 8px; }
+.promo-h { font-weight: 800; margin-top: 4px !important; }
+.promo-socials { display: flex; flex-wrap: wrap; gap: 8px; }
+.promo-socials .chip { min-height: 40px; padding: 0 14px; display: inline-flex; align-items: center; text-decoration: none; }
+.promo-x {
+  position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; display: grid; place-items: center; padding: 0;
+  color: var(--navy); background: var(--sky); border: 0; border-radius: 50%; cursor: pointer;
+}
+.promo-x:focus-visible { outline: 3px solid var(--focus); }
+@keyframes promo-in { from { opacity: 0; transform: translateY(24px); } }
+@media (prefers-reduced-motion: reduce) { .promo[open] { animation: none; } }
+@media (min-width: 760px) { .promo { inset: auto 24px 24px auto; } }

@@ -40,6 +40,74 @@ const messengerLinks = (cls: string) =>
     site.telegram ? `<a class="${cls}" href="https://t.me/${esc(site.telegram)}" target="_blank" rel="noopener noreferrer">Telegram</a>` : '',
   ].join('');
 
+
+const socialLabels: [keyof typeof site.socials, string][] = [
+  ['instagram', 'Instagram'], ['telegram', 'Telegram-канал'], ['threads', 'Threads'], ['facebook', 'Facebook'], ['tiktok', 'TikTok'],
+];
+const socialLinks = (cls: string) =>
+  socialLabels
+    .filter(([k]) => site.socials[k])
+    .map(([k, label]) => `<a class="${cls}" href="${esc(site.socials[k])}" target="_blank" rel="noopener noreferrer">${label}</a>`)
+    .join('');
+
+const placeUrl = (kind: 'writereview' | 'reviews') =>
+  `https://search.google.com/local/${kind}?placeid=${encodeURIComponent(site.googlePlaceId)}`;
+const mapSrc = (address: string) => `https://www.google.com/maps?q=${encodeURIComponent(address)}&hl=uk&output=embed`;
+const routeHref = (address: string) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+
+/** Карта офісів + відгуки Google. Показується лише якщо в конфігу є офіси, Place ID чи скріншоти. */
+function placesSection(): string {
+  const { offices, reviewImages, googlePlaceId } = site;
+  if (!offices.length && !reviewImages.length && !googlePlaceId) return '';
+  const first = offices[0];
+  const map = first
+    ? `<div class="map-box">
+      <div class="filters" role="group" aria-label="Офіси">${offices
+        .map((o, i) => `<button type="button" class="chip${i ? '' : ' is-active'}" data-office="${esc(o.address)}" aria-pressed="${i ? 'false' : 'true'}">${esc(o.name)}</button>`)
+        .join('')}</div>
+      <iframe class="map" id="office-map" title="Карта офісів" src="${mapSrc(first.address)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <p class="office-info" id="office-info"><strong>${esc(first.address)}</strong>${first.hours ? `<br>${esc(first.hours)}` : ''}</p>
+      <a class="btn btn-navy" id="office-route" href="${routeHref(first.address)}" target="_blank" rel="noopener noreferrer">Прокласти маршрут</a>
+    </div>`
+    : '';
+  const review = googlePlaceId
+    ? `<div class="review-cta"><h3>Ваш відгук важливий</h3><p>Були нашим клієнтом? Розкажіть, як усе минуло: це допоможе іншим обрати майстра.</p>
+      <a class="btn btn-yellow btn-lg" href="${placeUrl('writereview')}" target="_blank" rel="noopener noreferrer">Залишити відгук на Google</a>
+      <a class="btn btn-outline" href="${placeUrl('reviews')}" target="_blank" rel="noopener noreferrer">Усі відгуки на Google Картах</a></div>`
+    : '';
+  const shots = reviewImages.length
+    ? `<h3 class="reviews-h">Відгуки наших клієнтів</h3>
+    <div class="carousel">
+      <button type="button" class="car-btn car-prev" aria-label="Попередні відгуки">‹</button>
+      <ul class="gallery reviews">${reviewImages.map((f, i) => `<li><img src="reviews/${esc(f)}" loading="lazy" decoding="async" alt="Відгук клієнта ${i + 1}"></li>`).join('')}</ul>
+      <button type="button" class="car-btn car-next" aria-label="Наступні відгуки">›</button>
+    </div>`
+    : '';
+  return `
+<section class="section section-tint" id="places" aria-labelledby="places-title">
+  <div class="wrap">
+    <h2 id="places-title">${offices.length ? 'Де нас знайти' : 'Відгуки'}</h2>
+    <div class="places-grid">${map}${review}</div>
+    ${shots}
+  </div>
+</section>`;
+}
+
+/** Банер через 5 с після входу. Закривається хрестиком, Esc або вибором дії. */
+function promo(): string {
+  const d = site.phones.oles;
+  return `
+<dialog class="promo" id="promo" aria-labelledby="promo-title">
+  <button type="button" class="promo-x" aria-label="Закрити">${icon('close')}</button>
+  <h2 id="promo-title">Потрібен майстер?</h2>
+  <p>Зв’яжіться з диспетчером зручним способом.</p>
+  <a class="btn btn-yellow btn-lg" href="tel:${d.e164}">${icon('phone', 20)}<span>Диспетчер: ${esc(d.display)}</span></a>
+  <div class="promo-row">${messengerLinks('btn btn-navy')}</div>
+  <div class="promo-row"><a class="btn btn-outline" href="#price" data-promo-go>Залишити заявку</a><a class="btn btn-outline" href="#price" data-promo-go>Передзвонити мені</a></div>
+  ${Object.values(site.socials).some(Boolean) ? `<p class="promo-h">Ми в соцмережах</p><div class="promo-socials">${socialLinks('chip')}</div>` : ''}
+</dialog>`;
+}
+
 const nav = [
   ['home', 'Головна'],
   ['services', 'Послуги'],
@@ -321,7 +389,7 @@ function footer(): string {
     </div>
     <div>
       <p class="foot-h">Соцмережі</p>
-      <p><a href="${esc(site.instagram)}" target="_blank" rel="noopener noreferrer">Instagram</a>${site.telegram ? ` · <a href="https://t.me/${esc(site.telegram)}" target="_blank" rel="noopener noreferrer">Telegram</a>` : ''}</p>
+      <p class="foot-socials">${socialLinks("")}${site.telegram ? `<a href="https://t.me/${esc(site.telegram)}" target="_blank" rel="noopener noreferrer">Telegram</a>` : ""}</p>
     </div>
     <nav aria-label="Розділи сторінки">
       <p class="foot-h">Розділи</p>
@@ -341,7 +409,7 @@ function mobileBar(): string {
 }
 
 export function renderBody(): string {
-  return `${header()}<main id="main">${hero()}${servicesSection()}${whySection()}${howSection()}${priceSection()}${gallerySection()}${areaSection()}${faqSection()}${finalCta()}</main>${footer()}${mobileBar()}`;
+  return `${header()}<main id="main">${hero()}${servicesSection()}${whySection()}${howSection()}${priceSection()}${gallerySection()}${placesSection()}${areaSection()}${faqSection()}${finalCta()}</main>${footer()}${mobileBar()}${promo()}`;
 }
 
 /** canonical, og:url та JSON-LD. Лише перевірені факти: назва, телефони, територія. Без адреси, графіка, рейтингів. */
@@ -360,7 +428,7 @@ export function headExtra(): string {
       { '@type': 'City', name: 'Черкаси' },
       { '@type': 'AdministrativeArea', name: 'Черкаська область' },
     ],
-    sameAs: [site.instagram],
+    sameAs: Object.values(site.socials).filter(Boolean),
     makesOffer: services
       .filter((x) => x.category !== 'solar' || site.flags.solarConfirmed)
       .map((x) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.title, description: x.description } })),

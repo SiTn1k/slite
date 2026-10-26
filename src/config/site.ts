@@ -21,6 +21,20 @@ export interface Service {
 export const site = {
   name: 'MAYA',
   instagram: 'https://www.instagram.com/santekhnik_cherkasy/',
+  /** Соцмережі для банера й футера. Порожній рядок = кнопка не показується. */
+  socials: {
+    instagram: 'https://www.instagram.com/santekhnik_cherkasy/',
+    telegram: '', // посилання на канал, напр. https://t.me/назва
+    threads: '',
+    facebook: '',
+    tiktok: '',
+  },
+  /** ID місця на Google Maps (Place ID). Потрібен для кнопок "Залишити відгук" і "Усі відгуки". Порожньо = кнопки приховані. */
+  googlePlaceId: '',
+  /** Офіси для карти. address пошукається на Google Maps. Порожній масив = секція карти прихована. */
+  offices: [] as { name: string; address: string; hours?: string }[],
+  /** Скріншоти відгуків: файли в public/reviews/, тут лише назви, напр. 'r1.jpg'. Порожньо = карусель прихована. */
+  reviewImages: [] as string[],
   tagline: 'Сантехніка, електрика і сонячні панелі',
   area: 'Черкаси та Черкаська область',
   areaShort: 'по місту та області',
