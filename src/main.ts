@@ -1,7 +1,7 @@
 import '@fontsource-variable/manrope/wght.css';
 import './styles.css';
 import { site, services, categories, works, type CategoryId } from './config/site.ts';
-import { normalizePhone, viberHref } from './lib/phone.ts';
+import { isDesktop, normalizePhone, viberHref } from './lib/phone.ts';
 import { submitInquiry } from './lib/submit.ts';
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector<T>(sel);
@@ -217,10 +217,12 @@ if (lb) {
   lb.addEventListener('close', () => stage.replaceChildren());
 }
 
-// Android потребує інший запис номера у viber://, ніж десктоп та iOS.
-if (/android/i.test(navigator.userAgent)) {
+// Android, десктоп та iOS потребують різні посилання Viber.
+const android = /android/i.test(navigator.userAgent);
+const desktop = isDesktop(navigator.userAgent, navigator.maxTouchPoints);
+if (android || desktop) {
   document.querySelectorAll<HTMLAnchorElement>('a[data-viber]').forEach((a) => {
-    a.href = viberHref(site.viber, true);
+    a.href = viberHref(site.viber, android, desktop);
   });
 }
 
