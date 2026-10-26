@@ -148,6 +148,29 @@ filterBtns.forEach((b) =>
   }),
 );
 
+// Карусель: стрілки, автопрокрутка кожні 6 с (пауза при наведенні, фокусі, дотику та відкритому лайтбоксі)
+const track_ = document.querySelector<HTMLUListElement>('.gallery');
+if (track_) {
+  const move = (d: number) => {
+    const first = track_.querySelector<HTMLLIElement>('li:not([hidden])');
+    const end = track_.scrollLeft + track_.clientWidth >= track_.scrollWidth - 4;
+    if (d > 0 && end) track_.scrollTo({ left: 0 });
+    else if (d < 0 && track_.scrollLeft <= 4) track_.scrollTo({ left: track_.scrollWidth });
+    else track_.scrollBy({ left: d * ((first?.offsetWidth ?? 280) + 14) });
+  };
+  document.querySelector('.car-prev')?.addEventListener('click', () => move(-1));
+  document.querySelector('.car-next')?.addEventListener('click', () => move(1));
+  const car = track_.parentElement!;
+  let paused = false;
+  for (const [on, off] of [['pointerenter', 'pointerleave'], ['focusin', 'focusout'], ['touchstart', 'touchend']] as const) {
+    car.addEventListener(on, () => (paused = true));
+    car.addEventListener(off, () => (paused = false));
+  }
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(() => !paused && !document.hidden && !document.querySelector('#lightbox[open]') && move(1), 6000);
+  }
+}
+
 const lb = $<HTMLDialogElement>('#lightbox');
 if (lb) {
   const stage = lb.querySelector('.lb-stage')!;

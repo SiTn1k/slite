@@ -226,6 +226,8 @@ function gallerySection(): string {
       <button type="button" class="chip" data-filter="result" aria-pressed="false">Виконані роботи</button>
       <button type="button" class="chip" data-filter="process" aria-pressed="false">Процес</button>
     </div>
+    <div class="carousel">
+    <button type="button" class="car-btn car-prev" aria-label="Попередні роботи">‹</button>
     <ul class="gallery">
       ${works
         .map(
@@ -238,6 +240,8 @@ function gallerySection(): string {
         )
         .join('')}
     </ul>
+    <button type="button" class="car-btn car-next" aria-label="Наступні роботи">›</button>
+    </div>
     <dialog class="lightbox" id="lightbox" aria-label="Перегляд роботи">
       <div class="lb-stage"></div>
       <p class="lb-cap"></p>
