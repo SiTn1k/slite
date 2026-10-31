@@ -21,6 +21,8 @@ export interface Service {
 export const site = {
   name: 'MAYA',
   instagram: 'https://www.instagram.com/santekhnik_cherkasy/',
+  facebook: 'https://www.facebook.com/share/1EZmMcEYK9/?mibextid=wwXIfr',
+  threads: 'https://www.threads.com/@santekhnik_cherkasy?igshid=NTc4MTIwNjQ2YQ==',
   tagline: 'Сантехніка, електрика і сонячні панелі',
   area: 'Черкаси та Черкаська область',
   areaShort: 'по місту та області',
@@ -34,8 +36,8 @@ export const site = {
   /** ID потоку Google Analytics 4. Порожньо = аналітика вимкнена. */
   gaId: 'G-QYHB5MCHD0',
 
-  /** Нік без @ або номер у форматі +380… (для кнопки "Написати в Telegram"). Порожньо = кнопка не показується. */
-  telegram: '+380932577005',
+  /** Нік Telegram без @. Порожньо = кнопка не показується. */
+  telegram: 'santehnik_cherkasy',
 
   /** Порожньо = форма не надсилається нікуди, лише дзвінок або Viber. Див. README, розділ "Форма". */
   formEndpoint: '',
