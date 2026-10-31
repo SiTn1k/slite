@@ -36,8 +36,11 @@ export const site = {
   /** ID потоку Google Analytics 4. Порожньо = аналітика вимкнена. */
   gaId: 'G-QYHB5MCHD0',
 
-  /** Нік Telegram без @. Порожньо = кнопка не показується. */
-  telegram: 'santehnik_cherkasy',
+  /** Посилання на Telegram-канал. */
+  telegramChannel: 'https://t.me/santehnik_cherkasy',
+
+  /** Нік особистого Telegram-акаунта для кнопки написання. */
+  telegramContact: 'alex12031986',
 
   /** Порожньо = форма не надсилається нікуди, лише дзвінок або Viber. Див. README, розділ "Форма". */
   formEndpoint: '',
