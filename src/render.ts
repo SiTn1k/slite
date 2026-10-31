@@ -37,7 +37,7 @@ const phoneLinks = (cls: string) =>
 const messengerLinks = (cls: string) =>
   [
     `<a class="${cls}" data-viber href="${viberHref(site.viber, false)}">Viber</a>`,
-    site.telegram ? `<a class="${cls}" href="https://t.me/${esc(site.telegram)}" target="_blank" rel="noopener noreferrer">Telegram</a>` : '',
+    site.telegram ? `<a class="${cls}" href="https://t.me/${esc(site.telegram)}" target="_blank" rel="noopener noreferrer">Написати в Telegram</a>` : '',
   ].join('');
 
 const nav = [
@@ -321,7 +321,12 @@ function footer(): string {
     </div>
     <div>
       <p class="foot-h">Соцмережі</p>
-      <p><a href="${esc(site.instagram)}" target="_blank" rel="noopener noreferrer">Instagram</a>${site.telegram ? ` · <a href="https://t.me/${esc(site.telegram)}" target="_blank" rel="noopener noreferrer">Telegram</a>` : ''}</p>
+      <p>
+        <a href="${esc(site.instagram)}" target="_blank" rel="noopener noreferrer">Instagram</a>
+        · <a href="${esc(site.facebook)}" target="_blank" rel="noopener noreferrer">Facebook</a>
+        · <a href="${esc(site.threads)}" target="_blank" rel="noopener noreferrer">Threads</a>
+        ${site.telegram ? ` · <a href="https://t.me/${esc(site.telegram)}" target="_blank" rel="noopener noreferrer">Написати в Telegram</a>` : ''}
+      </p>
     </div>
     <nav aria-label="Розділи сторінки">
       <p class="foot-h">Розділи</p>
@@ -360,7 +365,7 @@ export function headExtra(): string {
       { '@type': 'City', name: 'Черкаси' },
       { '@type': 'AdministrativeArea', name: 'Черкаська область' },
     ],
-    sameAs: [site.instagram],
+    sameAs: [site.instagram, site.facebook, site.threads, ...(site.telegram ? [`https://t.me/${site.telegram}`] : [])],
     makesOffer: services
       .filter((x) => x.category !== 'solar' || site.flags.solarConfirmed)
       .map((x) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.title, description: x.description } })),
