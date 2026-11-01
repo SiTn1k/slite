@@ -167,6 +167,12 @@ export const works: Work[] = [
   { file: 'v5692', kind: 'video', stage: 'process', title: 'Демонтаж чавунної каналізації', text: 'Стара чавунна труба розсипається в руках: міняємо на нову.', duration: '0:51' },
   { file: 'v5696', kind: 'video', stage: 'process', title: 'Нова розводка труб', text: 'Труби прокладені, оздоблення стін ще попереду.', duration: '0:18' },
   { file: 'v5698', kind: 'video', stage: 'process', title: 'Приїзд на об’єкт', text: 'Перед монтажем бойлера довелося переробити стару розводку.', duration: '0:19' },
+  { file: 'client-01', kind: 'video', stage: 'result', title: 'Заміна стояка та душової лійки', text: 'Сантехнічні роботи у ванній кімнаті.', duration: '2:59' },
+  { file: 'client-02', kind: 'video', stage: 'result', title: 'Заміна дверного замка', text: 'Встановили новий дверний замок.', duration: '0:37' },
+  { file: 'client-03', kind: 'video', stage: 'result', title: 'Роботи у ванній кімнаті', text: 'Виконання сантехнічних робіт.', duration: '0:51' },
+  { file: 'client-04', kind: 'video', stage: 'result', title: 'Роботи на подвір’ї', text: 'Допомога з господарськими роботами на подвір’ї.', duration: '0:24' },
+  { file: 'client-05', kind: 'video', stage: 'result', title: 'Діагностика опалювального котла', text: 'Перевірили роботу опалювального котла.', duration: '1:14' },
+  { file: 'client-06', kind: 'video', stage: 'result', title: 'Заміна крана', text: 'Замінили кран у ванній кімнаті.', duration: '1:53' },
 ];
 
 /** Телефони для показу: порядок = порядок кнопок. */

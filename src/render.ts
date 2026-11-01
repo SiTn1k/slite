@@ -43,6 +43,7 @@ const messengerLinks = (cls: string) =>
 const nav = [
   ['home', 'Головна'],
   ['services', 'Послуги'],
+  ['gallery', 'Наші роботи'],
   ['how', 'Як замовити'],
   ['price', 'Вартість'],
   ['faq', 'Питання'],
