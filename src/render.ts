@@ -37,7 +37,7 @@ const phoneLinks = (cls: string) =>
 const messengerLinks = (cls: string) =>
   [
     `<a class="${cls}" data-viber href="${viberHref(site.viber, false)}">Viber</a>`,
-    `<a class="${cls}" href="tel:${site.phones.oles.e164}">Зателефонувати: ${esc(site.phones.oles.display)}</a>`,
+    `<a class="${cls}" href="https://t.me/${site.phones.oles.e164.replace('+', '')}" target="_blank" rel="noopener noreferrer">Написати диспетчеру в Telegram: ${esc(site.phones.oles.display)}</a>`,
   ].join('');
 
 const nav = [
@@ -171,7 +171,7 @@ function priceSection(): string {
     <div class="price-copy">
       <h2 id="price-title">Вартість</h2>
       <p class="section-lead">Вартість залежить від обсягу, складності робіт і матеріалів. Точну суму можна назвати, лише знаючи завдання.</p>
-      <p class="muted">Ця форма не надсилає заявку автоматично. Після заповнення ви зможете зателефонувати або написати у Viber.</p>
+      <p class="muted">Ця форма не надсилає заявку автоматично. Після заповнення ви зможете зателефонувати або написати диспетчеру в Telegram чи Viber.</p>
       <div class="phone-list">${phoneLinks('phone-link')}</div>
     </div>
     <form class="form" id="inquiry" novalidate>
@@ -326,7 +326,7 @@ function footer(): string {
         · <a href="${esc(site.facebook)}" target="_blank" rel="noopener noreferrer">Facebook</a>
         · <a href="${esc(site.threads)}" target="_blank" rel="noopener noreferrer">Threads</a>
         ${site.telegramChannel ? ` · <a href="${esc(site.telegramChannel)}" target="_blank" rel="noopener noreferrer">Telegram-канал</a>` : ''}
-        · <a href="tel:${site.phones.oles.e164}">Телефон: ${esc(site.phones.oles.display)}</a>
+        · <a href="https://t.me/${site.phones.oles.e164.replace('+', '')}" target="_blank" rel="noopener noreferrer">Написати диспетчеру в Telegram: ${esc(site.phones.oles.display)}</a>
       </p>
     </div>
     <nav aria-label="Розділи сторінки">
