@@ -121,7 +121,7 @@ form?.addEventListener('submit', async (e) => {
        <div class="cta-row">
          <a class="btn btn-yellow" href="${r.callHref}">Зателефонувати</a>
          <a class="btn btn-navy" href="${r.viberHref}" id="viber-btn">Написати у Viber</a>
-         ${r.telegramHref ? `<a class="btn btn-navy" href="${r.telegramHref}" target="_blank" rel="noopener noreferrer">Написати в Telegram</a>` : ''}
+         <a class="btn btn-navy" href="${r.publicPhoneHref}">Зателефонувати: ${r.publicPhoneDisplay}</a>
        </div>
        <p class="muted">Текст звернення (копіюється при натисканні на Viber, вставте його в чат):</p><p class="sms-preview"></p>`,
     );
