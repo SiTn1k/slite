@@ -79,7 +79,7 @@ function hero(): string {
       <div class="cta-row msgr" aria-label="Месенджери">${messengerLinks('btn btn-navy')}</div>
     </div>
     <figure class="hero-art">
-      <img src="img/hero.svg" width="600" height="520" fetchpriority="high" decoding="async"
+      <img src="img/hero.svg" width="600" height="520" fetchpriority="high" loading="eager" decoding="async"
         alt="Ілюстрація: розріз будинку з водяною трубою, електропроводкою та сонячними панелями на даху">
       <figcaption>Ілюстрація</figcaption>
     </figure>

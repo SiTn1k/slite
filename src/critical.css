@@ -1,0 +1,27 @@
+:root{--navy:#063b69;--navy-dark:#052b4a;--navy-deep:#031e34;--yellow:#ffd600;--yellow-hover:#f2c900;--sky:#eaf5fc;--ink:#183247;--muted:#55657a;--line:#cfe4f2;--water:#1b7fc4;--solar:#2e9e6b;--focus:#1b7fc4;--header-h:72px;--font:'Manrope Variable','Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);font-size:1.0625rem;line-height:1.6;color:var(--ink);background:#fff}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,p,figure{margin:0}
+.wrap{width:100%;max-width:1180px;margin-inline:auto;padding-inline:max(20px,env(safe-area-inset-left)) max(20px,env(safe-area-inset-right))}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 22px;border:2px solid transparent;border-radius:14px;font:inherit;font-weight:800;line-height:1.2;text-align:center;text-decoration:none;cursor:pointer}
+.btn-sm{min-height:44px;padding:8px 16px}.btn-lg{min-height:56px;padding:14px 28px;font-size:1.1rem}.btn-yellow{background:var(--yellow);color:var(--navy-dark)}.btn-outline{background:transparent;color:var(--navy);border-color:var(--navy)}.btn-navy{background:var(--navy);color:#fff}
+.site-header{position:sticky;top:0;z-index:60;background:rgb(255 255 255 / .96);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.bar{display:flex;align-items:center;gap:16px;min-height:var(--header-h)}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto;min-height:44px}.brand-name{font-weight:800;font-size:1.05rem;line-height:1.15;color:var(--navy-dark);letter-spacing:-.01em;white-space:nowrap}.logo{flex:none}
+.menu-btn{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;padding:0;border:2px solid var(--navy);border-radius:12px;background:#fff;color:var(--navy)}.menu-close{display:none}.nav-open .menu-open{display:none}.nav-open .menu-close{display:inline-flex}
+.nav{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;background:#fff;border-bottom:1px solid var(--line);padding:8px max(20px,env(safe-area-inset-left)) 16px}.nav-open .nav{display:flex}.nav a{display:flex;align-items:center;min-height:48px;padding:8px 4px;border-bottom:1px solid var(--line);font-weight:700;color:var(--navy);text-decoration:none}
+.header-cta{display:none;gap:10px}.header-cta .btn{white-space:nowrap}
+.hero{position:relative;background:linear-gradient(180deg,#fff 0%,var(--sky) 100%);padding-block:clamp(32px,6vw,72px) clamp(48px,7vw,88px)}.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;background:linear-gradient(90deg,var(--water) 0 33.33%,var(--yellow) 33.33% 66.66%,var(--solar) 66.66% 100%)}
+.hero-grid{display:grid;gap:32px;align-items:center}.hero-copy{display:grid;gap:24px;justify-items:start}
+h1{font-size:clamp(2.1rem,5.4vw,3.9rem);line-height:1.06;font-weight:800;letter-spacing:-.025em;color:var(--navy-dark);text-wrap:balance}
+.trade{--c:var(--water);padding-bottom:.04em;background:linear-gradient(var(--c),var(--c)) 0 100%/100% .13em no-repeat;box-decoration-break:clone;-webkit-box-decoration-break:clone}.trade-water{--c:var(--water)}.trade-bolt{--c:var(--yellow)}
+.lead{font-size:clamp(1.1rem,2.1vw,1.3rem);max-width:34em;color:var(--ink)}.cta-row,.phone-list{display:flex;flex-wrap:wrap;gap:12px}.phone-link{display:inline-flex;flex-direction:column;justify-content:center;min-height:60px;padding:8px 18px;border:2px solid var(--navy);border-radius:14px;background:#fff;color:var(--navy-dark);text-decoration:none}.phone-name{font-size:.85rem;font-weight:600;color:var(--muted);line-height:1.2}.phone-num{font-size:1.35rem;font-weight:800;letter-spacing:.01em;line-height:1.25}
+.hero-art img{width:100%;max-width:600px;margin-inline:auto}.hero-art figcaption{max-width:600px;margin:4px auto 0;text-align:right;font-size:.85rem;color:var(--muted)}
+@media(min-width:760px){.header-cta{display:flex}}
+@media(max-width:420px){.brand-name{white-space:normal}}
+@media(max-width:479px){.cta-row .btn{width:100%}.phone-link{flex:1 1 100%}}
+@media(min-width:900px){.hero-grid{grid-template-columns:1.1fr .9fr;gap:48px}}
+@media(min-width:1280px){.site-header .wrap{max-width:1320px}.menu-btn{display:none}.nav{display:flex;position:static;flex-direction:row;gap:0;margin-inline:auto;padding:0;border:0;background:none}.nav a{border:0;padding:8px;min-height:44px}.brand{margin-right:0}}

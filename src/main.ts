@@ -138,6 +138,7 @@ form?.addEventListener('submit', async (e) => {
 // --- галерея робіт: фільтр і лайтбокс (відтворення починається у лайтбоксі) ---
 const filterBtns = document.querySelectorAll<HTMLButtonElement>('.chip[data-filter]');
 const workItems = document.querySelectorAll<HTMLLIElement>('.gallery li');
+let scheduleMeasure: () => void = () => {};
 filterBtns.forEach((b) =>
   b.addEventListener('click', () => {
     filterBtns.forEach((x) => {
@@ -145,18 +146,38 @@ filterBtns.forEach((b) =>
       x.setAttribute('aria-pressed', String(x === b));
     });
     workItems.forEach((li) => (li.hidden = b.dataset.filter !== 'all' && li.dataset.stage !== b.dataset.filter));
+    scheduleMeasure();
   }),
 );
 
 // Карусель: стрілки, автопрокрутка кожні 6 с (пауза при наведенні, фокусі, дотику та відкритому лайтбоксі)
 const track_ = document.querySelector<HTMLUListElement>('.gallery');
 if (track_) {
-  const move = (d: number) => {
+  let itemStep = 294;
+  let maxScroll = 0;
+  let currentScroll = 0;
+  let measureFrame = 0;
+  const measure = () => {
+    measureFrame = 0;
     const first = track_.querySelector<HTMLLIElement>('li:not([hidden])');
-    const end = track_.scrollLeft + track_.clientWidth >= track_.scrollWidth - 4;
-    if (d > 0 && end) track_.scrollTo({ left: 0 });
-    else if (d < 0 && track_.scrollLeft <= 4) track_.scrollTo({ left: track_.scrollWidth });
-    else track_.scrollBy({ left: d * ((first?.offsetWidth ?? 280) + 14) });
+    const gap = Number.parseFloat(getComputedStyle(track_).columnGap) || 14;
+    itemStep = (first?.getBoundingClientRect().width ?? 280) + gap;
+    maxScroll = Math.max(0, track_.scrollWidth - track_.clientWidth);
+    currentScroll = track_.scrollLeft;
+  };
+  scheduleMeasure = () => {
+    if (!measureFrame) measureFrame = requestAnimationFrame(measure);
+  };
+  scheduleMeasure();
+  track_.addEventListener('scroll', () => { currentScroll = track_.scrollLeft; }, { passive: true });
+  window.addEventListener('resize', scheduleMeasure, { passive: true });
+  const resizeObserver = new ResizeObserver(scheduleMeasure);
+  resizeObserver.observe(track_);
+
+  const move = (d: number) => {
+    if (d > 0 && currentScroll >= maxScroll - 4) track_.scrollTo({ left: 0 });
+    else if (d < 0 && currentScroll <= 4) track_.scrollTo({ left: maxScroll });
+    else track_.scrollBy({ left: d * itemStep });
   };
   document.querySelector('.car-prev')?.addEventListener('click', () => move(-1));
   document.querySelector('.car-next')?.addEventListener('click', () => move(1));

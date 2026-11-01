@@ -1,5 +1,8 @@
 import { defineConfig, type Plugin } from 'vite';
+import { readFileSync } from 'node:fs';
 import { renderBody, headExtra, meta } from './src/render.ts';
+
+const criticalCss = readFileSync(new URL('./src/critical.css', import.meta.url), 'utf8').replace(/\s+/g, ' ').trim();
 
 // Підставляє контент із src/config/site.ts в index.html під час dev і build.
 function injectContent(): Plugin {
@@ -7,6 +10,7 @@ function injectContent(): Plugin {
     '%TITLE%': meta.title,
     '%DESCRIPTION%': meta.description,
     '%HEAD_EXTRA%': headExtra(),
+    '%CRITICAL_CSS%': criticalCss,
     '%BODY%': renderBody(),
   };
   return {
@@ -28,6 +32,10 @@ function fileProtocolSafe(): Plugin {
       order: 'post',
       handler: (html) =>
         html
+          .replace(
+            /<link rel="stylesheet" crossorigin href="([^"]+)">/g,
+            `<link rel="preload" as="style" href="$1" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="$1"></noscript>`,
+          )
           .replace(/<script type="module" crossorigin /g, '<script defer ')
           .replace(/(<link rel="stylesheet") crossorigin /g, '$1 '),
     },
