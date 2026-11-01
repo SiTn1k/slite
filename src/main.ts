@@ -117,11 +117,11 @@ form?.addEventListener('submit', async (e) => {
     }
     showResult(
       `<h3>Звернення підготовлено, але ще не надіслано</h3>
-       <p>Ця форма не передає дані нікуди. Щоб ми отримали ваше завдання, зателефонуйте або напишіть у Viber.</p>
+       <p>Ця форма не передає дані нікуди. Щоб ми отримали ваше завдання, зателефонуйте або напишіть диспетчеру в Telegram чи Viber.</p>
        <div class="cta-row">
          <a class="btn btn-yellow" href="${r.callHref}">Зателефонувати</a>
          <a class="btn btn-navy" href="${r.viberHref}" id="viber-btn">Написати у Viber</a>
-         <a class="btn btn-navy" href="${r.publicPhoneHref}">Зателефонувати: ${r.publicPhoneDisplay}</a>
+         <a class="btn btn-navy" href="${r.telegramHref}" target="_blank" rel="noopener noreferrer">Написати диспетчеру в Telegram: ${r.telegramDisplay}</a>
        </div>
        <p class="muted">Текст звернення (копіюється при натисканні на Viber, вставте його в чат):</p><p class="sms-preview"></p>`,
     );
