@@ -40,5 +40,5 @@ export async function submitInquiry(i: Inquiry): Promise<SubmitResult> {
   }
   const to = visiblePhones()[0];
   const message = buildMessage(i);
-  return { kind: 'fallback', callHref: `tel:${to.e164}`, viberHref: viberHref(site.viber, typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent), typeof navigator !== 'undefined' && isDesktop(navigator.userAgent, navigator.maxTouchPoints)), telegramHref: site.telegram ? `https://t.me/${site.telegram}` : '', message };
+  return { kind: 'fallback', callHref: `tel:${to.e164}`, viberHref: viberHref(site.viber, typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent), typeof navigator !== 'undefined' && isDesktop(navigator.userAgent, navigator.maxTouchPoints)), telegramHref: site.telegramContact ? `https://t.me/${site.telegramContact}` : '', message };
 }
