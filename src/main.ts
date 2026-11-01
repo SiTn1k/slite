@@ -135,7 +135,7 @@ form?.addEventListener('submit', async (e) => {
   }
 });
 
-// --- галерея робіт: фільтр і лайтбокс (відео вантажиться лише при відкритті) ---
+// --- галерея робіт: фільтр і лайтбокс (відтворення починається у лайтбоксі) ---
 const filterBtns = document.querySelectorAll<HTMLButtonElement>('.chip[data-filter]');
 const workItems = document.querySelectorAll<HTMLLIElement>('.gallery li');
 filterBtns.forEach((b) =>

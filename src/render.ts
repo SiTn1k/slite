@@ -233,7 +233,7 @@ function gallerySection(): string {
       ${works
         .map(
           (w, i) => `<li data-stage="${w.stage}"><button type="button" class="work" data-i="${i}" aria-label="${esc(w.title)}: відкрити ${w.kind === 'video' ? 'відео' : 'фото'}">
-        <img src="work/${w.file}.jpg" width="360" height="640" loading="lazy" decoding="async" alt="${esc(w.title)}">
+        ${w.kind === 'video' ? `<video src="work/${w.file}.mp4" poster="work/${w.file}.jpg" width="360" height="640" preload="none" playsinline aria-hidden="true" tabindex="-1"></video>` : `<img src="work/${w.file}.jpg" width="360" height="640" loading="lazy" decoding="async" alt="${esc(w.title)}">`}
         <span class="badge badge-${w.stage}">${w.stage === 'result' ? 'Виконано' : 'Процес'}</span>
         ${w.kind === 'video' ? `${play}<span class="dur">${w.duration}</span>` : ''}
         <span class="cap"><strong>${esc(w.title)}</strong><span>${esc(w.text)}</span></span>
