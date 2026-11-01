@@ -10,9 +10,9 @@ const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string);
 
 export const meta = {
-  title: `Сантехнік і електрик Черкаси — виклик майстра | ${site.name}`,
+  title: `Сантехнік у Черкасах — виклик і ремонт | ${site.name}`,
   description:
-    'Сантехнік і електрик у Черкасах: заміна труб і змішувачів, монтаж бойлерів і радіаторів, підключення пральних машин, заміна проводки, електрощити. Виклик майстра додому — зателефонуйте.',
+    'Виклик сантехніка в Черкасах: заміна труб і змішувачів, монтаж бойлерів, радіаторів та підключення пральних машин. Також виконуємо електромонтаж.',
 };
 
 const phones = visiblePhones();
@@ -72,8 +72,8 @@ function hero(): string {
 <section class="hero" id="home" aria-labelledby="hero-title">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <h1 id="hero-title"><span class="trade trade-water">Сантехнік</span>, <span class="trade trade-bolt">електрик</span> та <span class="trade trade-sun">сонячні панелі</span> в Черкасах</h1>
-      <p class="lead">Виклик сантехніка й електрика додому: монтаж, ремонт і заміна для квартир і будинків у Черкасах. Зателефонуйте — обговоримо завдання та вартість.</p>
+      <h1 id="hero-title"><span class="trade trade-water">Сантехнік</span> та <span class="trade trade-bolt">електрик</span> у Черкасах</h1>
+      <p class="lead">Монтаж, заміна й ремонт сантехніки та електрики для квартир і будинків у Черкасах та області. Зателефонуйте, опишіть завдання — обговоримо деталі й вартість.</p>
       <div class="cta-row">${callBtn('btn btn-yellow btn-lg')}<a class="btn btn-outline btn-lg" href="#price">Дізнатися вартість</a></div>
       <div class="phone-list" aria-label="Телефони">${phoneLinks('phone-link')}</div>
       <div class="cta-row msgr" aria-label="Месенджери">${messengerLinks('btn btn-navy')}</div>

@@ -173,6 +173,7 @@ export const works: Work[] = [
   { file: 'client-04', kind: 'video', stage: 'result', title: 'Роботи на подвір’ї', text: 'Допомога з господарськими роботами на подвір’ї.', duration: '0:24' },
   { file: 'client-05', kind: 'video', stage: 'result', title: 'Діагностика опалювального котла', text: 'Перевірили роботу опалювального котла.', duration: '1:14' },
   { file: 'client-06', kind: 'video', stage: 'result', title: 'Заміна крана', text: 'Замінили кран у ванній кімнаті.', duration: '1:53' },
+  { file: 'client-07', kind: 'video', stage: 'process', title: 'Заміна каналізаційної труби у водолікарні', text: 'Заміна каналізаційної труби у приміщенні водолікарні.', duration: '0:46' },
 ];
 
 /** Телефони для показу: порядок = порядок кнопок. */
