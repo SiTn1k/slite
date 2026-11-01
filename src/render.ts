@@ -37,7 +37,7 @@ const phoneLinks = (cls: string) =>
 const messengerLinks = (cls: string) =>
   [
     `<a class="${cls}" data-viber href="${viberHref(site.viber, false)}">Viber</a>`,
-    site.telegramContact ? `<a class="${cls}" href="https://t.me/${esc(site.telegramContact)}" target="_blank" rel="noopener noreferrer">Написати в Telegram</a>` : '',
+    `<a class="${cls}" href="tel:${site.phones.oles.e164}">Зателефонувати: ${esc(site.phones.oles.display)}</a>`,
   ].join('');
 
 const nav = [
@@ -326,7 +326,7 @@ function footer(): string {
         · <a href="${esc(site.facebook)}" target="_blank" rel="noopener noreferrer">Facebook</a>
         · <a href="${esc(site.threads)}" target="_blank" rel="noopener noreferrer">Threads</a>
         ${site.telegramChannel ? ` · <a href="${esc(site.telegramChannel)}" target="_blank" rel="noopener noreferrer">Telegram-канал</a>` : ''}
-        ${site.telegramContact ? ` · <a href="https://t.me/${esc(site.telegramContact)}" target="_blank" rel="noopener noreferrer">Написати в Telegram</a>` : ''}
+        · <a href="tel:${site.phones.oles.e164}">Телефон: ${esc(site.phones.oles.display)}</a>
       </p>
     </div>
     <nav aria-label="Розділи сторінки">
@@ -366,7 +366,7 @@ export function headExtra(): string {
       { '@type': 'City', name: 'Черкаси' },
       { '@type': 'AdministrativeArea', name: 'Черкаська область' },
     ],
-    sameAs: [site.instagram, site.facebook, site.threads, ...(site.telegramChannel ? [site.telegramChannel] : []), ...(site.telegramContact ? [`https://t.me/${site.telegramContact}`] : [])],
+    sameAs: [site.instagram, site.facebook, site.threads, ...(site.telegramChannel ? [site.telegramChannel] : [])],
     makesOffer: services
       .filter((x) => x.category !== 'solar' || site.flags.solarConfirmed)
       .map((x) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.title, description: x.description } })),
