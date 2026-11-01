@@ -138,7 +138,6 @@ form?.addEventListener('submit', async (e) => {
 // --- галерея робіт: фільтр і лайтбокс (відтворення починається у лайтбоксі) ---
 const filterBtns = document.querySelectorAll<HTMLButtonElement>('.chip[data-filter]');
 const workItems = document.querySelectorAll<HTMLLIElement>('.gallery li');
-let scheduleMeasure: () => void = () => {};
 filterBtns.forEach((b) =>
   b.addEventListener('click', () => {
     filterBtns.forEach((x) => {
@@ -146,7 +145,6 @@ filterBtns.forEach((b) =>
       x.setAttribute('aria-pressed', String(x === b));
     });
     workItems.forEach((li) => (li.hidden = b.dataset.filter !== 'all' && li.dataset.stage !== b.dataset.filter));
-    scheduleMeasure();
   }),
 );
 
@@ -156,23 +154,19 @@ if (track_) {
   let itemStep = 294;
   let maxScroll = 0;
   let currentScroll = 0;
-  let measureFrame = 0;
   const measure = () => {
-    measureFrame = 0;
     const first = track_.querySelector<HTMLLIElement>('li:not([hidden])');
     const gap = Number.parseFloat(getComputedStyle(track_).columnGap) || 14;
     itemStep = (first?.getBoundingClientRect().width ?? 280) + gap;
     maxScroll = Math.max(0, track_.scrollWidth - track_.clientWidth);
     currentScroll = track_.scrollLeft;
   };
-  scheduleMeasure = () => {
-    if (!measureFrame) measureFrame = requestAnimationFrame(measure);
-  };
-  scheduleMeasure();
-  track_.addEventListener('scroll', () => { currentScroll = track_.scrollLeft; }, { passive: true });
-  window.addEventListener('resize', scheduleMeasure, { passive: true });
-  const resizeObserver = new ResizeObserver(scheduleMeasure);
+  // ResizeObserver runs after layout. Geometry is read together here, never
+  // immediately after the filter changes `hidden` or after a scroll write.
+  const resizeObserver = new ResizeObserver(measure);
   resizeObserver.observe(track_);
+  workItems.forEach((item) => resizeObserver.observe(item));
+  track_.addEventListener('scroll', () => { currentScroll = track_.scrollLeft; }, { passive: true });
 
   const move = (d: number) => {
     if (d > 0 && currentScroll >= maxScroll - 4) track_.scrollTo({ left: 0 });
@@ -205,7 +199,7 @@ if (lb) {
     if (w.kind === 'video') {
       const v = document.createElement('video');
       v.src = `work/${w.file}.mp4`;
-      v.poster = `work/${w.file}.jpg`;
+      v.poster = `work/posters/${w.file}.webp`;
       v.controls = v.autoplay = v.playsInline = true;
       v.setAttribute('playsinline', '');
       stage.append(v);
@@ -247,9 +241,31 @@ if (android || desktop) {
   });
 }
 
-// Події в GA4: дзвінки та месенджери. gtag відсутній, якщо аналітика вимкнена або заблокована.
-type Gtag = (cmd: 'event', name: string, params?: object) => void;
-const track = (name: string, params?: object) => (window as unknown as { gtag?: Gtag }).gtag?.('event', name, params);
+// GA4 не завантажується до першої взаємодії, щоб не конкурувати з рендерингом.
+type Gtag = (...args: unknown[]) => void;
+const analyticsWindow = window as Window & { dataLayer?: unknown[][]; gtag?: Gtag };
+let analyticsStarted = false;
+function loadAnalytics() {
+  if (!site.gaId || analyticsStarted) return;
+  analyticsStarted = true;
+  analyticsWindow.dataLayer ??= [];
+  analyticsWindow.gtag = (...args) => analyticsWindow.dataLayer!.push(args);
+  analyticsWindow.gtag('js', new Date());
+  analyticsWindow.gtag('config', site.gaId);
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(site.gaId)}`;
+  document.head.append(script);
+}
+document.addEventListener('pointerdown', loadAnalytics, { once: true, passive: true });
+document.addEventListener('touchstart', loadAnalytics, { once: true, passive: true });
+document.addEventListener('keydown', loadAnalytics, { once: true });
+
+const track = (name: string, params?: object) => {
+  if (!site.gaId) return;
+  loadAnalytics();
+  analyticsWindow.gtag?.('event', name, params);
+};
 document.addEventListener('click', (e) => {
   const href = (e.target as Element).closest('a')?.getAttribute('href') ?? '';
   if (href.startsWith('tel:')) track('click_call', { phone: href.slice(4) });

@@ -10,9 +10,9 @@ const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string);
 
 export const meta = {
-  title: `Сантехнік у Черкасах — виклик і ремонт | ${site.name}`,
+  title: `Сантехнік та електрик у Черкасах — виклик | ${site.name}`,
   description:
-    'Виклик сантехніка в Черкасах: заміна труб і змішувачів, монтаж бойлерів, радіаторів та підключення пральних машин. Також виконуємо електромонтаж.',
+    'Сантехнічні та електромонтажні роботи в Черкасах і області: ремонт труб, бойлерів, проводки та електрощитів. Зателефонуйте, щоб обговорити виїзд і вартість.',
 };
 
 const phones = visiblePhones();
@@ -233,7 +233,7 @@ function gallerySection(): string {
       ${works
         .map(
           (w, i) => `<li data-stage="${w.stage}"><button type="button" class="work" data-i="${i}" aria-label="${esc(w.title)}: відкрити ${w.kind === 'video' ? 'відео' : 'фото'}">
-        ${w.kind === 'video' ? `<video src="work/${w.file}.mp4" poster="work/${w.file}.jpg" width="360" height="640" preload="none" playsinline aria-hidden="true" tabindex="-1"></video>` : `<img src="work/${w.file}.jpg" width="360" height="640" loading="lazy" decoding="async" alt="${esc(w.title)}">`}
+        <img src="work/${w.kind === 'video' ? `posters/${w.file}.webp` : `${w.file}.jpg`}" width="360" height="640" loading="lazy" decoding="async" alt="">
         <span class="badge badge-${w.stage}">${w.stage === 'result' ? 'Виконано' : 'Процес'}</span>
         ${w.kind === 'video' ? `${play}<span class="dur">${w.duration}</span>` : ''}
         <span class="cap"><strong>${esc(w.title)}</strong><span>${esc(w.text)}</span></span>
@@ -379,11 +379,5 @@ export function headExtra(): string {
     mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
   };
   const script = (o: object) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
-  const ga = site.gaId
-    ? [
-        `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.gaId)}"></script>`,
-        `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(site.gaId)}');</script>`,
-      ]
-    : [];
-  return [...url, script(ld), script(faqLd), ...ga].join('\n');
+  return [...url, script(ld), script(faqLd)].join('\n');
 }

@@ -153,7 +153,7 @@ export const faq = [
   },
 ];
 
-/** Реальні роботи. file: public/work/<file>.mp4 + .jpg (постер) або лише .jpg для фото. stage: result = виконано, process = процес. */
+/** Реальні роботи. Відео: public/work/<file>.mp4 + public/work/posters/<file>.webp; фото: public/work/<file>.jpg. */
 export type Work = { file: string; kind: 'video' | 'photo'; stage: 'result' | 'process'; title: string; text: string; duration?: string };
 
 export const works: Work[] = [
