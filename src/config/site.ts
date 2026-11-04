@@ -33,10 +33,14 @@ export const site = {
   /** Номер, на якому відкривається чат Viber (може відрізнятися від номерів для дзвінків). */
   viber: '+380932577005',
 
-  /** ID потоку Google Analytics 4. Порожньо = аналітика вимкнена. */
+  /**
+   * ID потоку Google Analytics 4. Сайт його нікуди не підключає напряму — це лише
+   * довідкове значення для налаштування GA4 Configuration тегу всередині GTM
+   * (tagmanager.google.com). Див. README, розділ "Аналітика".
+   */
   gaId: 'G-QYHB5MCHD0',
 
-  /** ID контейнера Google Tag Manager. Порожньо = GTM вимкнено. */
+  /** ID контейнера Google Tag Manager. Порожньо = GTM вимкнено. Вантажиться статично в <head>. */
   gtmId: 'GTM-TJWXJKCR',
 
   /** Посилання на Telegram-канал. */

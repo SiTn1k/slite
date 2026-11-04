@@ -6,6 +6,15 @@ import { submitInquiry } from './lib/submit.ts';
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector<T>(sel);
 
+// GA4 налаштовується цілком через GTM (контейнер з site.gtmId, вантажиться статично в
+// <head>, див. render.ts headExtra/gtmNoscript). Сайт лише штовхає іменовані події в
+// dataLayer; що з ними робити (GA4, Google Ads conversions) — налаштовується в GTM, без змін коду.
+const pushEvent = (event: string, params: Record<string, unknown> = {}) => {
+  const w = window as Window & { dataLayer?: unknown[] };
+  w.dataLayer ??= [];
+  w.dataLayer.push({ event, ...params });
+};
+
 // --- мобільне меню ---
 const header = $('.site-header');
 const menuBtn = $<HTMLButtonElement>('.menu-btn');
@@ -102,6 +111,7 @@ form?.addEventListener('submit', async (e) => {
   const cat = catSel.value;
   const label = cat === 'other' ? 'Інше' : cat ? categories[cat as CategoryId].title : '';
   const service = services.find((s) => s.id === svcSel.value)?.title ?? '';
+  pushEvent('generate_lead', { category: label, service });
   const data = new FormData(form);
   try {
     const r = await submitInquiry({
@@ -241,38 +251,11 @@ if (android || desktop) {
   });
 }
 
-// GA4 не завантажується до першої взаємодії, щоб не конкурувати з рендерингом.
-// GTM (site.gtmId) вантажиться одразу й статично в HTML (render.ts: headExtra/gtmNoscript),
-// бо сервіси перевірки тегу скановують початковий HTML без імітації взаємодії користувача.
-type Gtag = (...args: unknown[]) => void;
-const analyticsWindow = window as Window & { dataLayer?: unknown[]; gtag?: Gtag };
-let analyticsStarted = false;
-function loadAnalytics() {
-  if (!site.gaId || analyticsStarted) return;
-  analyticsStarted = true;
-  analyticsWindow.dataLayer ??= [];
-  analyticsWindow.gtag = (...args) => analyticsWindow.dataLayer!.push(args);
-  analyticsWindow.gtag('js', new Date());
-  analyticsWindow.gtag('config', site.gaId);
-  const gaScript = document.createElement('script');
-  gaScript.async = true;
-  gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(site.gaId)}`;
-  document.head.append(gaScript);
-}
-document.addEventListener('pointerdown', loadAnalytics, { once: true, passive: true });
-document.addEventListener('touchstart', loadAnalytics, { once: true, passive: true });
-document.addEventListener('keydown', loadAnalytics, { once: true });
-
-const track = (name: string, params?: object) => {
-  if (!site.gaId) return;
-  loadAnalytics();
-  analyticsWindow.gtag?.('event', name, params);
-};
 document.addEventListener('click', (e) => {
   const href = (e.target as Element).closest('a')?.getAttribute('href') ?? '';
-  if (href.startsWith('tel:')) track('click_call', { phone: href.slice(4) });
-  else if ((href.startsWith('viber:') || href.includes('scheme=viber'))) track('click_viber');
-  else if (href.includes('t.me/')) track('click_telegram');
+  if (href.startsWith('tel:')) pushEvent('click_call', { phone: href.slice(4) });
+  else if (href.startsWith('viber:') || href.includes('scheme=viber')) pushEvent('click_viber');
+  else if (href.includes('t.me/')) pushEvent('click_telegram');
 });
 
 const year = $('#year');
