@@ -174,6 +174,11 @@ export const works: Work[] = [
   { file: 'client-05', kind: 'video', stage: 'result', title: 'Діагностика опалювального котла', text: 'Перевірили роботу опалювального котла.', duration: '1:14' },
   { file: 'client-06', kind: 'video', stage: 'result', title: 'Заміна крана', text: 'Замінили кран у ванній кімнаті.', duration: '1:53' },
   { file: 'client-07', kind: 'video', stage: 'process', title: 'Заміна каналізаційної труби у водолікарні', text: 'Заміна каналізаційної труби у приміщенні водолікарні.', duration: '0:46' },
+  { file: 'v9137', kind: 'video', stage: 'process', title: 'Відновлення дверної рами', text: 'Відновили пошкоджену дверну раму та лиштву.', duration: '0:47' },
+  { file: 'client-08', kind: 'video', stage: 'result', title: 'Заміна каналізаційних труб', text: 'Замінили каналізаційні труби — ще один об’єкт виконано.', duration: '1:45' },
+  { file: 'client-09', kind: 'video', stage: 'result', title: 'Заміна шланга душової кабіни', text: 'Замінили гнучкий шланг душової кабіни.', duration: '0:31' },
+  { file: 'client-10', kind: 'video', stage: 'process', title: 'Обслуговування газового котла', text: 'Технічне обслуговування газового котла.', duration: '1:27' },
+  { file: 'client-11', kind: 'video', stage: 'process', title: 'Діагностика змішувача', text: 'Оглянули змішувач, який потребує ремонту.', duration: '0:49' },
 ];
 
 /** Телефони для показу: порядок = порядок кнопок. */
