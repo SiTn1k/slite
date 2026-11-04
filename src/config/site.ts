@@ -36,6 +36,9 @@ export const site = {
   /** ID потоку Google Analytics 4. Порожньо = аналітика вимкнена. */
   gaId: 'G-QYHB5MCHD0',
 
+  /** ID контейнера Google Tag Manager. Порожньо = GTM вимкнено. */
+  gtmId: 'GTM-TJWXJKCR',
+
   /** Посилання на Telegram-канал. */
   telegramChannel: 'https://t.me/santehnik_cherkasy',
 
