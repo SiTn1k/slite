@@ -348,7 +348,7 @@ function mobileBar(): string {
 }
 
 export function renderBody(): string {
-  return `${header()}<main id="main">${hero()}${servicesSection()}${whySection()}${howSection()}${priceSection()}${gallerySection()}${areaSection()}${faqSection()}${finalCta()}</main>${footer()}${mobileBar()}`;
+  return `${gtmNoscript()}${header()}<main id="main">${hero()}${servicesSection()}${whySection()}${howSection()}${priceSection()}${gallerySection()}${areaSection()}${faqSection()}${finalCta()}</main>${footer()}${mobileBar()}`;
 }
 
 /** canonical, og:url та JSON-LD. Лише перевірені факти: назва, телефони, територія. Без адреси, графіка, рейтингів. */
@@ -379,5 +379,16 @@ export function headExtra(): string {
     mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
   };
   const script = (o: object) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
-  return [...url, script(ld), script(faqLd)].join('\n');
+  const gtm = site.gtmId
+    ? [
+        `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.start'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${esc(site.gtmId)}');</script>`,
+      ]
+    : [];
+  return [...url, script(ld), script(faqLd), ...gtm].join('\n');
+}
+
+/** <noscript> GTM-iframe одразу після відкриття <body>, за офіційним сніпетом Google. */
+export function gtmNoscript(): string {
+  if (!site.gtmId) return '';
+  return `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${esc(site.gtmId)}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`;
 }

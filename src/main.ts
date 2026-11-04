@@ -241,30 +241,23 @@ if (android || desktop) {
   });
 }
 
-// GA4 і GTM не завантажуються до першої взаємодії, щоб не конкурувати з рендерингом.
+// GA4 не завантажується до першої взаємодії, щоб не конкурувати з рендерингом.
+// GTM (site.gtmId) вантажиться одразу й статично в HTML (render.ts: headExtra/gtmNoscript),
+// бо сервіси перевірки тегу скановують початковий HTML без імітації взаємодії користувача.
 type Gtag = (...args: unknown[]) => void;
 const analyticsWindow = window as Window & { dataLayer?: unknown[]; gtag?: Gtag };
 let analyticsStarted = false;
 function loadAnalytics() {
-  if (analyticsStarted || (!site.gaId && !site.gtmId)) return;
+  if (!site.gaId || analyticsStarted) return;
   analyticsStarted = true;
   analyticsWindow.dataLayer ??= [];
-  if (site.gaId) {
-    analyticsWindow.gtag = (...args) => analyticsWindow.dataLayer!.push(args);
-    analyticsWindow.gtag('js', new Date());
-    analyticsWindow.gtag('config', site.gaId);
-    const gaScript = document.createElement('script');
-    gaScript.async = true;
-    gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(site.gaId)}`;
-    document.head.append(gaScript);
-  }
-  if (site.gtmId) {
-    analyticsWindow.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.start' });
-    const gtmScript = document.createElement('script');
-    gtmScript.async = true;
-    gtmScript.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(site.gtmId)}`;
-    document.head.append(gtmScript);
-  }
+  analyticsWindow.gtag = (...args) => analyticsWindow.dataLayer!.push(args);
+  analyticsWindow.gtag('js', new Date());
+  analyticsWindow.gtag('config', site.gaId);
+  const gaScript = document.createElement('script');
+  gaScript.async = true;
+  gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(site.gaId)}`;
+  document.head.append(gaScript);
 }
 document.addEventListener('pointerdown', loadAnalytics, { once: true, passive: true });
 document.addEventListener('touchstart', loadAnalytics, { once: true, passive: true });
