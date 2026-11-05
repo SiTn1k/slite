@@ -43,6 +43,16 @@ export const site = {
   /** ID контейнера Google Tag Manager. Порожньо = GTM вимкнено. Вантажиться статично в <head>. */
   gtmId: 'GTM-TJWXJKCR',
 
+  /**
+   * Google Ads conversion ID. Вантажиться напряму в <head> (не через GTM): контейнер
+   * GTM-TJWXJKCR не підтримує supportGtagConfigs, через що нові теги в ньому не
+   * прив'язуються до правил спрацювання (мертвий код). Порожньо = вимкнено.
+   */
+  googleAdsId: 'AW-17611423112',
+
+  /** Google Ads conversion labels (customer 6122434521). Порожньо = конверсія не шлеться. */
+  googleAdsLabels: { call: 'UKcLCIyhzbIdEIj7481B', lead: 'x_0qCI-hzbIdEIj7481B' },
+
   /** Посилання на Telegram-канал. */
   telegramChannel: 'https://t.me/santehnik_cherkasy',
 

@@ -384,7 +384,13 @@ export function headExtra(): string {
         `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.start'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${esc(site.gtmId)}');</script>`,
       ]
     : [];
-  return [...url, script(ld), script(faqLd), ...gtm].join('\n');
+  const googleAds = site.googleAdsId
+    ? [
+        `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.googleAdsId)}"></script>`,
+        `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(site.googleAdsId)}');</script>`,
+      ]
+    : [];
+  return [...url, script(ld), script(faqLd), ...gtm, ...googleAds].join('\n');
 }
 
 /** <noscript> GTM-iframe одразу після відкриття <body>, за офіційним сніпетом Google. */

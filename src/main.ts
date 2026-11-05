@@ -15,6 +15,13 @@ const pushEvent = (event: string, params: Record<string, unknown> = {}) => {
   w.dataLayer.push({ event, ...params });
 };
 
+// Google Ads conversions шлються напряму (не через GTM, див. коментар біля site.googleAdsId).
+const reportAdsConversion = (label: string) => {
+  const w = window as Window & { gtag?: (...args: unknown[]) => void };
+  if (!site.googleAdsId || !label || typeof w.gtag !== 'function') return;
+  w.gtag('event', 'conversion', { send_to: `${site.googleAdsId}/${label}` });
+};
+
 // --- мобільне меню ---
 const header = $('.site-header');
 const menuBtn = $<HTMLButtonElement>('.menu-btn');
@@ -112,6 +119,7 @@ form?.addEventListener('submit', async (e) => {
   const label = cat === 'other' ? 'Інше' : cat ? categories[cat as CategoryId].title : '';
   const service = services.find((s) => s.id === svcSel.value)?.title ?? '';
   pushEvent('generate_lead', { category: label, service });
+  reportAdsConversion(site.googleAdsLabels.lead);
   const data = new FormData(form);
   try {
     const r = await submitInquiry({
@@ -253,7 +261,10 @@ if (android || desktop) {
 
 document.addEventListener('click', (e) => {
   const href = (e.target as Element).closest('a')?.getAttribute('href') ?? '';
-  if (href.startsWith('tel:')) pushEvent('click_call', { phone: href.slice(4) });
+  if (href.startsWith('tel:')) {
+    pushEvent('click_call', { phone: href.slice(4) });
+    reportAdsConversion(site.googleAdsLabels.call);
+  }
   else if (href.startsWith('viber:') || href.includes('scheme=viber')) pushEvent('click_viber');
   else if (href.includes('t.me/')) pushEvent('click_telegram');
 });
