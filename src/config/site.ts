@@ -31,7 +31,7 @@ export const site = {
   domain: 'https://santehnik-cherkasy.com',
 
   /** Номер, на якому відкривається чат Viber (може відрізнятися від номерів для дзвінків). */
-  viber: '+380932577005',
+  viber: '+380734010948',
 
   /**
    * ID потоку Google Analytics 4. Сайт його нікуди не підключає напряму — це лише
@@ -65,8 +65,7 @@ export const site = {
       { name: 'Андрій', display: '098 936 61 51', e164: '+380989366151' },
       { name: 'Андрій', display: '093 468 05 02', e164: '+380934680502' },
     ] satisfies Phone[],
-    // TO CONFIRM WITH OWNER: номер Олеся не підтверджений, прихований прапорцем showOlesPhone.
-    oles: { name: 'Диспетчер', display: '093 257 70 05', e164: '+380932577005' } satisfies Phone,
+    oles: { name: 'Диспетчер', display: '073 401 09 48', e164: '+380734010948' } satisfies Phone,
   },
 };
 
