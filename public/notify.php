@@ -1,0 +1,48 @@
+<?php
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['ok' => false]);
+    exit;
+}
+
+$BOT_TOKEN = '8606297089:AAFp-REem0ueK4NEA6UXKHVfe8P8y6vqIFw';
+$CHAT_ID   = '877462850';
+
+$body = json_decode(file_get_contents('php://input'), true);
+$type = $body['type'] ?? '';
+
+if ($type === 'form') {
+    $name     = trim($body['name'] ?? '');
+    $phone    = trim($body['phone'] ?? '');
+    $category = trim($body['category'] ?? '');
+    $service  = trim($body['service'] ?? '');
+    $desc     = trim($body['description'] ?? '');
+
+    $lines = ['📋 <b>Нова заявка з сайту</b>'];
+    if ($name)     $lines[] = "👤 Ім'я: $name";
+    $lines[]               = "📞 Телефон: <b>$phone</b>";
+    if ($category) $lines[] = "🔧 Напрямок: $category" . ($service ? ", $service" : '');
+    if ($desc)     $lines[] = "📝 Завдання: $desc";
+
+    $text = implode("\n", $lines);
+} elseif ($type === 'call') {
+    $phone = trim($body['phone'] ?? '');
+    $text  = "📞 <b>Натиснули «Зателефонувати»</b>\nНомер: $phone";
+} else {
+    http_response_code(400);
+    echo json_encode(['ok' => false]);
+    exit;
+}
+
+$url  = "https://api.telegram.org/bot$BOT_TOKEN/sendMessage";
+$data = http_build_query(['chat_id' => $CHAT_ID, 'text' => $text, 'parse_mode' => 'HTML']);
+
+$ctx = stream_context_create(['http' => ['method' => 'POST', 'header' => 'Content-Type: application/x-www-form-urlencoded', 'content' => $data]]);
+$res = file_get_contents($url, false, $ctx);
+
+echo $res ?: json_encode(['ok' => false]);

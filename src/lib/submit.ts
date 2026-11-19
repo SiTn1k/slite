@@ -29,16 +29,29 @@ export function buildMessage(i: Inquiry): string {
  *   тому вмикайте її свідомо (див. README).
  */
 export async function submitInquiry(i: Inquiry): Promise<SubmitResult> {
-  if (site.formEndpoint) {
-    const res = await fetch(site.formEndpoint, {
+  const endpoint = site.formEndpoint || 'notify.php';
+  try {
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(i),
+      body: JSON.stringify({ type: 'form', ...i }),
     });
-    if (!res.ok) throw new Error(`Form endpoint answered ${res.status}`);
-    return { kind: 'sent' };
-  }
+    if (res.ok) {
+      const json = await res.json() as { ok: boolean };
+      if (json.ok) return { kind: 'sent' };
+    }
+  } catch {}
   const to = visiblePhones()[0];
   const message = buildMessage(i);
   return { kind: 'fallback', callHref: `tel:${to.e164}`, viberHref: viberHref(site.viber, typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent), typeof navigator !== 'undefined' && isDesktop(navigator.userAgent, navigator.maxTouchPoints)), telegramHref: `https://t.me/${site.phones.oles.e164}`, telegramDisplay: site.phones.oles.display, message };
+}
+
+export async function notifyCall(phone: string): Promise<void> {
+  try {
+    await fetch('notify.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'call', phone }),
+    });
+  } catch {}
 }

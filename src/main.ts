@@ -2,7 +2,7 @@ import '@fontsource-variable/manrope/wght.css';
 import './styles.css';
 import { site, services, categories, works, type CategoryId } from './config/site.ts';
 import { isDesktop, normalizePhone, viberHref } from './lib/phone.ts';
-import { submitInquiry } from './lib/submit.ts';
+import { submitInquiry, notifyCall } from './lib/submit.ts';
 
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector<T>(sel);
 
@@ -264,6 +264,7 @@ document.addEventListener('click', (e) => {
   if (href.startsWith('tel:')) {
     pushEvent('click_call', { phone: href.slice(4) });
     reportAdsConversion(site.googleAdsLabels.call);
+    notifyCall(href.slice(4));
   }
   else if (href.startsWith('viber:') || href.includes('scheme=viber')) pushEvent('click_viber');
   else if (href.includes('t.me/')) pushEvent('click_telegram');
