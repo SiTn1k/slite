@@ -40,5 +40,5 @@ export async function submitInquiry(i: Inquiry): Promise<SubmitResult> {
   }
   const to = visiblePhones()[0];
   const message = buildMessage(i);
-  return { kind: 'fallback', callHref: `tel:${to.e164}`, viberHref: viberHref(site.viber, typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent), typeof navigator !== 'undefined' && isDesktop(navigator.userAgent, navigator.maxTouchPoints)), telegramHref: `https://t.me/${site.phones.oles.e164.replace('+', '')}`, telegramDisplay: site.phones.oles.display, message };
+  return { kind: 'fallback', callHref: `tel:${to.e164}`, viberHref: viberHref(site.viber, typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent), typeof navigator !== 'undefined' && isDesktop(navigator.userAgent, navigator.maxTouchPoints)), telegramHref: `https://t.me/${site.phones.oles.e164}`, telegramDisplay: site.phones.oles.display, message };
 }

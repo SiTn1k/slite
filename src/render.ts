@@ -37,7 +37,7 @@ const phoneLinks = (cls: string) =>
 const messengerLinks = (cls: string) =>
   [
     `<a class="${cls}" data-viber href="${viberHref(site.viber, false)}">Viber</a>`,
-    `<a class="${cls}" href="https://t.me/${site.phones.oles.e164.replace('+', '')}" target="_blank" rel="noopener noreferrer">Написати диспетчеру в Telegram: ${esc(site.phones.oles.display)}</a>`,
+    `<a class="${cls}" href="https://t.me/${site.phones.oles.e164}" target="_blank" rel="noopener noreferrer">Написати диспетчеру в Telegram: ${esc(site.phones.oles.display)}</a>`,
   ].join('');
 
 const nav = [
@@ -327,7 +327,7 @@ function footer(): string {
         · <a href="${esc(site.facebook)}" target="_blank" rel="noopener noreferrer">Facebook</a>
         · <a href="${esc(site.threads)}" target="_blank" rel="noopener noreferrer">Threads</a>
         ${site.telegramChannel ? ` · <a href="${esc(site.telegramChannel)}" target="_blank" rel="noopener noreferrer">Telegram-канал</a>` : ''}
-        · <a href="https://t.me/${site.phones.oles.e164.replace('+', '')}" target="_blank" rel="noopener noreferrer">Написати диспетчеру в Telegram: ${esc(site.phones.oles.display)}</a>
+        · <a href="https://t.me/${site.phones.oles.e164}" target="_blank" rel="noopener noreferrer">Написати диспетчеру в Telegram: ${esc(site.phones.oles.display)}</a>
       </p>
     </div>
     <nav aria-label="Розділи сторінки">
