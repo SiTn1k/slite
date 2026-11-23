@@ -35,8 +35,11 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
+          echo "TOKEN set: $( [ -n "$TELEGRAM_BOT_TOKEN" ] && echo YES || echo NO )"
+          echo "CHAT_ID set: $( [ -n "$TELEGRAM_CHAT_ID" ] && echo YES || echo NO )"
           sed -i "s|%%TELEGRAM_BOT_TOKEN%%|${TELEGRAM_BOT_TOKEN}|g" dist/notify.php
           sed -i "s|%%TELEGRAM_CHAT_ID%%|${TELEGRAM_CHAT_ID}|g" dist/notify.php
+          grep -c "%%TELEGRAM" dist/notify.php && echo "ERROR: placeholders still present!" || echo "OK: secrets injected"
 
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
