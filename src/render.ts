@@ -335,7 +335,7 @@ function footer(): string {
       <ul>${nav.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join('')}</ul>
     </nav>
   </div>
-  <p class="wrap copy">© <span id="year">${new Date().getFullYear()}</span> ${esc(site.name)}</p>
+  <p class="wrap copy">© <span id="year">${new Date().getFullYear()}</span> ${esc(site.name)}<a class="bonsi-badge" href="https://bonsi.site" target="_blank" rel="noopener noreferrer" aria-label="Зроблено агенцією Bonsi"><span class="bonsi-from">from</span><span class="bonsi-name">BONSI</span></a></p>
 </footer>`;
 }
 

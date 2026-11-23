@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$BOT_TOKEN = '8606297089:AAFp-REem0ueK4NEA6UXKHVfe8P8y6vqIFw';
-$CHAT_ID   = '877462850';
+$BOT_TOKEN = getenv('TELEGRAM_BOT_TOKEN') ?: '%%TELEGRAM_BOT_TOKEN%%';
+$CHAT_ID   = getenv('TELEGRAM_CHAT_ID') ?: '%%TELEGRAM_CHAT_ID%%';
 
 $body = json_decode(file_get_contents('php://input'), true);
 $type = $body['type'] ?? '';

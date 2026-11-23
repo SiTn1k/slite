@@ -195,6 +195,11 @@ export const works: Work[] = [
   { file: 'client-09', kind: 'video', stage: 'result', title: 'Заміна шланга душової кабіни', text: 'Замінили гнучкий шланг душової кабіни.', duration: '0:31' },
   { file: 'client-10', kind: 'video', stage: 'process', title: 'Обслуговування газового котла', text: 'Технічне обслуговування газового котла.', duration: '1:27' },
   { file: 'client-11', kind: 'video', stage: 'process', title: 'Діагностика змішувача', text: 'Оглянули змішувач, який потребує ремонту.', duration: '0:49' },
+  { file: 'client-12', kind: 'video', stage: 'result', title: 'Сантехнічні роботи', text: 'Виконання сантехнічних робіт.', duration: '0:50' },
+  { file: 'client-13', kind: 'video', stage: 'result', title: 'Сантехнічні роботи', text: 'Виконання сантехнічних робіт.', duration: '3:07' },
+  { file: 'client-14', kind: 'video', stage: 'result', title: 'Сантехнічні роботи', text: 'Виконання сантехнічних робіт.', duration: '1:18' },
+  { file: 'client-16', kind: 'video', stage: 'result', title: 'Сантехнічні роботи', text: 'Виконання сантехнічних робіт.', duration: '2:39' },
+  { file: 'client-17', kind: 'video', stage: 'result', title: 'Сантехнічні роботи', text: 'Виконання сантехнічних робіт.', duration: '0:28' },
 ];
 
 /** Телефони для показу: порядок = порядок кнопок. */

@@ -30,6 +30,14 @@ jobs:
       - name: Build website
         run: npm run build
 
+      - name: Inject Telegram secrets into notify.php
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          sed -i "s|%%TELEGRAM_BOT_TOKEN%%|${TELEGRAM_BOT_TOKEN}|g" dist/notify.php
+          sed -i "s|%%TELEGRAM_CHAT_ID%%|${TELEGRAM_CHAT_ID}|g" dist/notify.php
+
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
