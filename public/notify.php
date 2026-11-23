@@ -42,7 +42,12 @@ if ($type === 'form') {
 $url  = "https://api.telegram.org/bot$BOT_TOKEN/sendMessage";
 $data = http_build_query(['chat_id' => $CHAT_ID, 'text' => $text, 'parse_mode' => 'HTML']);
 
-$ctx = stream_context_create(['http' => ['method' => 'POST', 'header' => 'Content-Type: application/x-www-form-urlencoded', 'content' => $data]]);
+$ctx = stream_context_create(['http' => [
+    'method'  => 'POST',
+    'header'  => 'Content-Type: application/x-www-form-urlencoded',
+    'content' => $data,
+    'ignore_errors' => true,
+]]);
 $res = file_get_contents($url, false, $ctx);
 
-echo $res ?: json_encode(['ok' => false]);
+echo $res ?: json_encode(['ok' => false, 'debug' => 'no response from telegram']);
