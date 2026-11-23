@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $BOT_TOKEN = getenv('TELEGRAM_BOT_TOKEN') ?: '%%TELEGRAM_BOT_TOKEN%%';
-$CHAT_ID   = '877462850';
+$CHAT_IDS  = array_filter(array_map('trim', explode(',', getenv('TELEGRAM_CHAT_ID') ?: '%%TELEGRAM_CHAT_ID%%')));
 
 $body = json_decode(file_get_contents('php://input'), true);
 $type = $body['type'] ?? '';
@@ -39,15 +39,22 @@ if ($type === 'form') {
     exit;
 }
 
-$url  = "https://api.telegram.org/bot$BOT_TOKEN/sendMessage";
-$data = http_build_query(['chat_id' => $CHAT_ID, 'text' => $text, 'parse_mode' => 'HTML']);
-
+$url = "https://api.telegram.org/bot$BOT_TOKEN/sendMessage";
 $ctx = stream_context_create(['http' => [
-    'method'  => 'POST',
-    'header'  => 'Content-Type: application/x-www-form-urlencoded',
-    'content' => $data,
+    'method'        => 'POST',
+    'header'        => 'Content-Type: application/x-www-form-urlencoded',
     'ignore_errors' => true,
 ]]);
-$res = file_get_contents($url, false, $ctx);
 
-echo $res ?: json_encode(['ok' => false, 'debug' => 'no response from telegram']);
+$last = null;
+foreach ($CHAT_IDS as $chat_id) {
+    $ctx_copy = stream_context_create(['http' => [
+        'method'        => 'POST',
+        'header'        => 'Content-Type: application/x-www-form-urlencoded',
+        'content'       => http_build_query(['chat_id' => $chat_id, 'text' => $text, 'parse_mode' => 'HTML']),
+        'ignore_errors' => true,
+    ]]);
+    $last = file_get_contents($url, false, $ctx_copy);
+}
+
+echo $last ?: json_encode(['ok' => false]);
